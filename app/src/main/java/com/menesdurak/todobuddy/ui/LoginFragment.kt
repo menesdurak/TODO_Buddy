@@ -1,6 +1,7 @@
 package com.menesdurak.todobuddy.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,8 @@ class LoginFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var email: String
+    private lateinit var password: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +32,7 @@ class LoginFragment : Fragment() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
-        if(currentUser != null){
+        if (currentUser != null) {
             Toast.makeText(requireContext(), "Already signed.", Toast.LENGTH_SHORT).show()
         }
     }
@@ -49,6 +52,25 @@ class LoginFragment : Fragment() {
 
         binding.tvSignUp.setOnClickListener {
             findNavController().navigate(R.id.signUpFragment)
+        }
+
+        binding.btnLogin.setOnClickListener {
+            email = binding.etMail.text.toString()
+            password = binding.etPassword.text.toString()
+
+            if (email.isNotEmpty() && password.isNotEmpty()) {
+                auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Log.d("loginSuccess", "signInWithEmail:success")
+                        val user = auth.currentUser
+                        findNavController().navigate(R.id.homeFragment)
+                    } else {
+                        Log.w("loginFail", "signInWithEmail:failure", task.exception)
+                        Toast.makeText(requireContext(), "Authentication failed.",
+                            Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
         }
     }
 
