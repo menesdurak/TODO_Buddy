@@ -40,4 +40,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etPassword"/>
 
+    <TextView
+        android:id="@+id/tvSignUpPast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Don't have an account?"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tvSignUp"
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin"/>
+
+    <TextView
+        android:id="@+id/tvSignUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Click here to sign up."
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/tvSignUpPast"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
