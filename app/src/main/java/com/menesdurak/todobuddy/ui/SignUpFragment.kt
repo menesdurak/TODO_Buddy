@@ -53,7 +53,6 @@ class SignUpFragment : Fragment() {
                 auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                     if(task.isSuccessful) {
                         Log.d("signUpSuccess", "createUserWithEmail:success")
-                        val user = auth.currentUser
                         findNavController().navigate(R.id.loginFragment)
                     } else {
                         Log.w("signUpFail", "createUserWithEmail:failure", task.exception)
