@@ -34,6 +34,7 @@ class LoginFragment : Fragment() {
         val currentUser = auth.currentUser
         if (currentUser != null) {
             Toast.makeText(requireContext(), "Already signed.", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.homeFragment)
         }
     }
 
