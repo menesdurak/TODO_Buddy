@@ -42,13 +42,19 @@ class HomeFragment : Fragment() {
         val notesList = arrayListOf(note1, note2)
         val notesList2 = arrayListOf(note1, note2, note3)
 
+        //Creating new reference for note
         val newRef = notesRef.push()
+        //Getting unique key of new reference
         val key = newRef.key
         Log.e("1234", key!!)
+        //Creating a new Group class
         val group = Group(notesList2, key)
-        newRef.setValue(group)
+        //Pushing new Group
+//        newRef.setValue(group)
 
-//        notesRef.child("-NN0ywFBKK-wlE1-K9ac").removeValue()
+        val updateNote = HashMap<String, Any>()
+        updateNote["notes"] = Group(notesList)
+        notesRef.child("-NN6a8PtQ-L-rq1P5HJJ").updateChildren(updateNote)
 //-------------------------------------------------------------------------------------
 //        val userId = "1234"
 //        val listId = "1212"
@@ -59,10 +65,18 @@ class HomeFragment : Fragment() {
 
 //        myRef.setValue("Hello, World!")
 
-//        myRef.child(userId).child(listId).addValueEventListener(object : ValueEventListener {
+//        notesRef.addValueEventListener(object : ValueEventListener {
 //            override fun onDataChange(snapshot: DataSnapshot) {
-//                val value = snapshot.getValue()
-//                Log.d("value1", "Value is $value")
+//                for(i in snapshot.children) {
+//                    val group = i.getValue(Group::class.java)
+//                    if (group != null) {
+//                        Log.e("******","******")
+//                        for (j in group.notes!!){
+//                            Log.e("Note", j.note!!)
+//                            Log.e("isDrawn", "${j.drawn}")
+//                        }
+//                    }
+//                }
 //            }
 //
 //            override fun onCancelled(error: DatabaseError) {
