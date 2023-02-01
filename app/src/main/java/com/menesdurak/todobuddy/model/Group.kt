@@ -1,3 +1,7 @@
 package com.menesdurak.todobuddy.model
 
-data class Group(val notes: ArrayList<Note>? = null, val uid: String? = null)
+import com.google.firebase.database.IgnoreExtraProperties
+@IgnoreExtraProperties
+data class Group(val title:String? = null,
+                 val notes: ArrayList<Note>? = null,
+                 val userIds: ArrayList<String>? = null)
