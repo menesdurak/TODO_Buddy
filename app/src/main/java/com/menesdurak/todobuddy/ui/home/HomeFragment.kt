@@ -130,6 +130,11 @@ class HomeFragment : Fragment() {
             binding.recyclerView.layoutManager = GridLayoutManager(context,2)
             homeAdapter = HomeAdapter(titleList)
             binding.recyclerView.adapter = homeAdapter
+            homeAdapter.setOnItemClickListener(object : HomeAdapter.HomeListClickListener{
+                override fun onItemClicked(position: Int) {
+                    println(it.value)
+                }
+            })
         }
     }
 
