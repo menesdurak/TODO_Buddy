@@ -9,7 +9,11 @@
         android:id="@+id/homeFragment"
         android:name="com.menesdurak.todobuddy.ui.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <argument
+            android:name="email"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.menesdurak.todobuddy.ui.login.LoginFragment"
