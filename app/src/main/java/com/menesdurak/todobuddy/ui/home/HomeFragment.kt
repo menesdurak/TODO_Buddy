@@ -27,7 +27,6 @@ class HomeFragment : Fragment() {
     private lateinit var notesRef: DatabaseReference
     private lateinit var titleList: ArrayList<String>
     private lateinit var homeAdapter: HomeAdapter
-    private var isListCreated = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,7 +57,7 @@ class HomeFragment : Fragment() {
 //        Log.e("1234", key!!)
         val userList = arrayListOf("12abc", "ab123")
         val newGroup = Group("Home", notesList2, userList)
-        newGroupRef.setValue(newGroup)
+//        newGroupRef.setValue(newGroup)
 
 //        //Creating new reference for note
 //        val newRef = notesRef.push()
@@ -114,7 +113,11 @@ class HomeFragment : Fragment() {
             for (i in it.children) {
                 val group = i.getValue(Group::class.java)
                 if (group != null) {
-                    titleList.add(group.title!!)
+                    for (j in group.userIds!!) {
+                        if (j == "12a") {
+                            titleList.add(group.title!!)
+                        }
+                    }
                 }
             }
             binding.recyclerView.layoutManager = LinearLayoutManager(context)
