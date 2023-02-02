@@ -33,8 +33,9 @@ class LoginFragment : Fragment() {
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
         if (currentUser != null) {
-            Toast.makeText(requireContext(), "Already signed.", Toast.LENGTH_SHORT).show()
-            findNavController().navigate(R.id.homeFragment)
+            Toast.makeText(requireContext(), "${currentUser.email}", Toast.LENGTH_SHORT).show()
+            val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment(currentUser.email!!)
+            findNavController().navigate(action)
         }
     }
 
