@@ -1,4 +1,4 @@
-package com.menesdurak.todobuddy.ui
+package com.menesdurak.todobuddy.ui.home
 
 import android.os.Bundle
 import android.util.Log
@@ -6,19 +6,28 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.menesdurak.todobuddy.R
 import com.menesdurak.todobuddy.databinding.FragmentHomeBinding
 import com.menesdurak.todobuddy.model.Group
 import com.menesdurak.todobuddy.model.Note
+import com.menesdurak.todobuddy.ui.adapter.HomeAdapter
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var database: FirebaseDatabase
+    private lateinit var notesRef: DatabaseReference
+    private lateinit var titleList: ArrayList<String>
+    private lateinit var homeAdapter: HomeAdapter
+    private var isListCreated = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,6 +36,7 @@ class HomeFragment : Fragment() {
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val view = binding.root
+
         return view
     }
 
@@ -35,8 +45,8 @@ class HomeFragment : Fragment() {
 
 //-------------------------------------------------------------------------------
         //CREATE DATABASE AND WRITE
-        val database = Firebase.database
-        val notesRef = database.getReference("groups")
+        database = Firebase.database
+        notesRef = database.getReference("groups")
         val notesRef2 = database.reference.child("path").child("111").child("222")
         val note1 = Note("123")
         val note2 = Note("abc", true)
@@ -47,7 +57,7 @@ class HomeFragment : Fragment() {
         val key = newGroupRef.key
 //        Log.e("1234", key!!)
         val userList = arrayListOf("12abc", "ab123")
-        val newGroup = Group("Market", notesList, userList)
+        val newGroup = Group("Home", notesList2, userList)
         newGroupRef.setValue(newGroup)
 
 //        //Creating new reference for note
@@ -62,12 +72,12 @@ class HomeFragment : Fragment() {
 
 //------------------------------------------------------------------------------------
         //UPDATE
-        val newNote = Note("1aaaaa")
-        val newList = notesList.add(newNote)
-        val updateUsers = hashMapOf<String, Any>(
-            "userIds" to "abc123a"
-        )
-        userList.add("3456")
+//        val newNote = Note("1aaaaa")
+//        val newList = notesList.add(newNote)
+//        val updateUsers = hashMapOf<String, Any>(
+//            "userIds" to "abc123a"
+//        )
+//        userList.add("3456")
 //        notesRef.child("-NNBp0ELFnsHt4fvLFWZ").updateChildren(updateUsers)
 //        notesRef.child("-NNBshFWr-YjutIivAzn").child("userIds").setValue(userList)
 
@@ -97,6 +107,20 @@ class HomeFragment : Fragment() {
 //
 //        })
 //-------------------------------------------------------------------------------------
+
+        titleList = arrayListOf()
+
+        notesRef.get().addOnSuccessListener {
+            for (i in it.children) {
+                val group = i.getValue(Group::class.java)
+                if (group != null) {
+                    titleList.add(group.title!!)
+                }
+            }
+            binding.recyclerView.layoutManager = LinearLayoutManager(context)
+            homeAdapter = HomeAdapter(titleList)
+            binding.recyclerView.adapter = homeAdapter
+        }
     }
 
     override fun onDestroyView() {
