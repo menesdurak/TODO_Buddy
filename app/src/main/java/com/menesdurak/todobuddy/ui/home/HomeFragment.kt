@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.DataSnapshot
@@ -28,6 +29,7 @@ class HomeFragment : Fragment() {
     private lateinit var notesRef: DatabaseReference
     private lateinit var titleList: ArrayList<String>
     private lateinit var homeAdapter: HomeAdapter
+    private var userEmail: String = "0"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,6 +38,10 @@ class HomeFragment : Fragment() {
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val view = binding.root
+
+        //Get user email from login fragment
+        val args: HomeFragmentArgs by navArgs()
+        userEmail = args.email
 
         return view
     }
@@ -115,7 +121,7 @@ class HomeFragment : Fragment() {
                 val group = i.getValue(Group::class.java)
                 if (group != null) {
                     for (j in group.userIds!!) {
-                        if (j == "12a") {
+                        if (j == userEmail) {
                             titleList.add(group.title!!)
                         }
                     }
