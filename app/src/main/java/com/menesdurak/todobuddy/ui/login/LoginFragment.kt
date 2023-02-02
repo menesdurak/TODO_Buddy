@@ -1,4 +1,4 @@
-package com.menesdurak.todobuddy.ui
+package com.menesdurak.todobuddy.ui.login
 
 import android.os.Bundle
 import android.util.Log

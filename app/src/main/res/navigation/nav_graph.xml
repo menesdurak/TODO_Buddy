@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.menesdurak.todobuddy.ui.HomeFragment"
+        android:name="com.menesdurak.todobuddy.ui.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.menesdurak.todobuddy.ui.LoginFragment"
+        android:name="com.menesdurak.todobuddy.ui.login.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -24,7 +24,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.menesdurak.todobuddy.ui.SignUpFragment"
+        android:name="com.menesdurak.todobuddy.ui.sign.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" >
         <action
