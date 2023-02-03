@@ -66,5 +66,9 @@ class NoteFragment : Fragment() {
             noteAdapter = NoteAdapter(notesList)
             binding.recyclerView.adapter = noteAdapter
         }
+
+        binding.fbAddNote.setOnClickListener {
+            findNavController().navigate(R.id.addNoteFragment)
+        }
     }
 }
