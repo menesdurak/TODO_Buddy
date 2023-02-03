@@ -43,11 +43,11 @@
         android:name="com.menesdurak.todobuddy.ui.note.NoteFragment"
         android:label="fragment_note"
         tools:layout="@layout/fragment_note" >
+        <argument
+            android:name="groupKey"
+            app:argType="string" />
         <action
             android:id="@+id/action_noteFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
-        <argument
-            android:name="email"
-            app:argType="string" />
     </fragment>
 </navigation>
