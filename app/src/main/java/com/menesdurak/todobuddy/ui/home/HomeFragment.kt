@@ -28,6 +28,7 @@ class HomeFragment : Fragment() {
     private lateinit var database: FirebaseDatabase
     private lateinit var notesRef: DatabaseReference
     private lateinit var titleList: ArrayList<String>
+    private lateinit var keyList: ArrayList<String>
     private lateinit var homeAdapter: HomeAdapter
     private var userEmail: String = "0"
 
@@ -62,8 +63,8 @@ class HomeFragment : Fragment() {
         val newGroupRef = notesRef.push()
         val key = newGroupRef.key
 //        Log.e("1234", key!!)
-        val userList = arrayListOf("12abc", "ab123")
-        val newGroup = Group("Home", notesList2, userList)
+        val userList = arrayListOf("12bfa", "ab123")
+        val newGroup = Group("Car", notesList2, userList, key)
 //        newGroupRef.setValue(newGroup)
 
 //        //Creating new reference for note
@@ -115,6 +116,7 @@ class HomeFragment : Fragment() {
 //-------------------------------------------------------------------------------------
 
         titleList = arrayListOf()
+        keyList = arrayListOf()
 
         notesRef.get().addOnSuccessListener {
             for (i in it.children) {
@@ -123,23 +125,19 @@ class HomeFragment : Fragment() {
                     for (j in group.userIds!!) {
                         if (j == userEmail) {
                             titleList.add(group.title!!)
+                            keyList.add(group.key!!)
                         }
                     }
                 }
             }
-            binding.recyclerView.layoutManager = GridLayoutManager(context,2)
+            binding.recyclerView.layoutManager = GridLayoutManager(context, 2)
             homeAdapter = HomeAdapter(titleList)
             binding.recyclerView.adapter = homeAdapter
-            homeAdapter.setOnItemClickListener(object : HomeAdapter.HomeListClickListener{
+            homeAdapter.setOnItemClickListener(object : HomeAdapter.HomeListClickListener {
                 override fun onItemClicked(position: Int) {
-                    println(it.value)
+                    println(keyList[position])
                 }
             })
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }
