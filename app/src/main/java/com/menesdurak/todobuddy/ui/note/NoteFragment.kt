@@ -1,25 +1,19 @@
 package com.menesdurak.todobuddy.ui.note
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.menesdurak.todobuddy.R
-import com.menesdurak.todobuddy.databinding.FragmentLoginBinding
 import com.menesdurak.todobuddy.databinding.FragmentNoteBinding
 import com.menesdurak.todobuddy.model.Group
-import com.menesdurak.todobuddy.ui.adapter.HomeAdapter
 import com.menesdurak.todobuddy.ui.adapter.NoteAdapter
-import com.menesdurak.todobuddy.ui.home.HomeFragmentDirections
 
 class NoteFragment : Fragment() {
 
@@ -40,8 +34,7 @@ class NoteFragment : Fragment() {
         _binding = FragmentNoteBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        val args: NoteFragmentArgs by navArgs()
-        groupKey = args.groupKey
+        groupKey = arguments?.getString("key").toString()
 
         return view
     }
@@ -67,8 +60,12 @@ class NoteFragment : Fragment() {
             binding.recyclerView.adapter = noteAdapter
         }
 
+        val args: NoteFragmentArgs by navArgs()
+        val key = args.key
+
         binding.fbAddNote.setOnClickListener {
-            findNavController().navigate(R.id.addNoteFragment)
+            val action = NoteFragmentDirections.actionNoteFragmentToAddNoteFragment(key)
+            findNavController().navigate(action)
         }
     }
 }
