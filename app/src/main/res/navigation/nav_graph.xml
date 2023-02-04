@@ -43,15 +43,15 @@
         android:name="com.menesdurak.todobuddy.ui.note.NoteFragment"
         android:label="fragment_note"
         tools:layout="@layout/fragment_note" >
-        <argument
-            android:name="groupKey"
-            app:argType="string" />
         <action
             android:id="@+id/action_noteFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
         <action
             android:id="@+id/action_noteFragment_to_addNoteFragment"
             app:destination="@id/addNoteFragment" />
+        <argument
+            android:name="key"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/addNoteFragment"
@@ -61,5 +61,8 @@
         <action
             android:id="@+id/action_addNoteFragment_to_noteFragment"
             app:destination="@id/noteFragment" />
+        <argument
+            android:name="key"
+            app:argType="string" />
     </fragment>
 </navigation>
