@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_homeFragment_to_noteFragment"
             app:destination="@id/noteFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_addGroupFragment"
+            app:destination="@id/addGroupFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -63,6 +66,18 @@
             app:destination="@id/noteFragment" />
         <argument
             android:name="key"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/addGroupFragment"
+        android:name="com.menesdurak.todobuddy.ui.title.AddGroupFragment"
+        android:label="fragment_add_group"
+        tools:layout="@layout/fragment_add_group" >
+        <action
+            android:id="@+id/action_addGroupFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <argument
+            android:name="email"
             app:argType="string" />
     </fragment>
 </navigation>
