@@ -51,20 +51,12 @@ class HomeFragment : Fragment() {
         //CREATE DATABASE AND WRITE
         database = Firebase.database
         groupsRef = database.getReference("groups")
-        val notesRef2 = database.reference.child("path").child("111").child("222")
-        val note1 = Note("123")
-        val note2 = Note("abc", true)
-        val note3 = Note("1a2b")
-        val notesList = arrayListOf(note1, note2)
-        val notesList2 = arrayListOf(note1, note2, note3)
         val emptyNoteList = arrayListOf<Note>()
+        val emptyUserList = arrayListOf<String>()
         val newGroupRef = groupsRef.push()
         val newNoteRef = groupsRef.child("-NNVh0CtgesTkoNuUCRG").child("notes").push()
         val newUserIdRef = groupsRef.child("-NNVsUJdz6lwyj_uP2Sy").child("userId").push()
         val key = newGroupRef.key
-//        Log.e("1234", key!!)
-        val userList = arrayListOf("12bfa", "ab123")
-        val emptyUserList = arrayListOf<String>()
         val newGroup = Group("Car", emptyNoteList, emptyUserList, key)
 //        newGroupRef.setValue(newGroup)
         val newNote = Note("market arabasi")
@@ -113,6 +105,13 @@ class HomeFragment : Fragment() {
                 }
             })
         }
+
+        binding.fabtnAddGroup.setOnClickListener {
+            val action =
+                HomeFragmentDirections.actionHomeFragmentToAddGroupFragment(userEmail)
+            findNavController().navigate(action)
+        }
+
 //*************************************************************************************************
 //        notesRef.get().addOnSuccessListener {
 //            for (i in it.children) {
