@@ -27,7 +27,7 @@ class HomeFragment : Fragment() {
     private lateinit var keyList: ArrayList<String>
     private lateinit var homeAdapter: HomeAdapter
     private var userEmail: String = "0"
-    private var isAllowedToWrite: Boolean = false
+    private var isAllowedToAddTitle: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,14 +60,14 @@ class HomeFragment : Fragment() {
         val emptyNoteList = arrayListOf<Note>()
         val newGroupRef = groupsRef.push()
         val newNoteRef = groupsRef.child("-NNVh0CtgesTkoNuUCRG").child("notes").push()
-        val newUserIdRef = groupsRef.child("-NNVh0CtgesTkoNuUCRG").child("userId").push()
+        val newUserIdRef = groupsRef.child("-NNVsUJdz6lwyj_uP2Sy").child("userId").push()
         val key = newGroupRef.key
 //        Log.e("1234", key!!)
         val userList = arrayListOf("12bfa", "ab123")
         val emptyUserList = arrayListOf<String>()
-        val newGroup = Group("Market", emptyNoteList, emptyUserList, key)
+        val newGroup = Group("Car", emptyNoteList, emptyUserList, key)
 //        newGroupRef.setValue(newGroup)
-        val newNote = Note("araba yazisi")
+        val newNote = Note("market arabasi")
 //        newNoteRef.setValue(newNote)
 //        newUserIdRef.setValue(userEmail)
 
@@ -92,12 +92,13 @@ class HomeFragment : Fragment() {
                 for (j in i.children) {
                     for (k in j.children) {
                         if (k.value == userEmail) {
-                            isAllowedToWrite = true
+                            isAllowedToAddTitle = true
                         }
                     }
-                    if (j.key == "z_title") {
+                    if (j.key == "z_title" && isAllowedToAddTitle) {
                         titleList.add(j.value.toString())
-                        isAllowedToWrite = false
+                        keyList.add(i.key.toString())
+                        isAllowedToAddTitle = false
                     }
                 }
             }
@@ -112,7 +113,7 @@ class HomeFragment : Fragment() {
                 }
             })
         }
-//****************************************************************************************************
+//*************************************************************************************************
 //        notesRef.get().addOnSuccessListener {
 //            for (i in it.children) {
 //                val group = i.getValue(Group::class.java)
@@ -135,7 +136,7 @@ class HomeFragment : Fragment() {
 //                }
 //            })
 //        }
-//****************************************************************************************************
+//*************************************************************************************************
 //        groupsRef.get().addOnSuccessListener {
 //            for (i in it.children) {
 //                for (j in i.children) {
@@ -160,6 +161,6 @@ class HomeFragment : Fragment() {
 //                }
 //            })
 //        }
-//****************************************************************************************************
+//*************************************************************************************************
     }
 }
