@@ -13,6 +13,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.menesdurak.todobuddy.databinding.FragmentNoteBinding
 import com.menesdurak.todobuddy.model.Group
+import com.menesdurak.todobuddy.model.Note
 import com.menesdurak.todobuddy.ui.adapter.NoteAdapter
 
 class NoteFragment : Fragment() {
@@ -23,7 +24,8 @@ class NoteFragment : Fragment() {
     private var groupKey: String = "0"
     private lateinit var database: FirebaseDatabase
     private lateinit var noteRef: DatabaseReference
-    private lateinit var notesList: ArrayList<String>
+    private lateinit var notesList: ArrayList<Note>
+    private lateinit var drawnList: ArrayList<Boolean>
     private lateinit var noteAdapter: NoteAdapter
 
     override fun onCreateView(
@@ -43,18 +45,18 @@ class NoteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         notesList = arrayListOf()
+        drawnList = arrayListOf()
 
         //CREATE DATABASE AND WRITE
         database = Firebase.database
-        noteRef = database.getReference("groups").child(groupKey)
+        noteRef = database.getReference("groups").child(groupKey).child("notes")
 
         noteRef.get().addOnSuccessListener {
-            val group = it.getValue(Group::class.java)
-            if (group != null) {
-                for (i in group.notes!!) {
-                    notesList.add(i.note!!)
-                }
+            for (i in it.children) {
+                val note = i.getValue(Note::class.java)
+                notesList.add(note!!)
             }
+
             binding.recyclerView.layoutManager = LinearLayoutManager(context)
             noteAdapter = NoteAdapter(notesList)
             binding.recyclerView.adapter = noteAdapter
