@@ -22,11 +22,12 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var database: FirebaseDatabase
-    private lateinit var notesRef: DatabaseReference
+    private lateinit var groupsRef: DatabaseReference
     private lateinit var titleList: ArrayList<String>
     private lateinit var keyList: ArrayList<String>
     private lateinit var homeAdapter: HomeAdapter
     private var userEmail: String = "0"
+    private var isAllowedToWrite: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,29 +50,26 @@ class HomeFragment : Fragment() {
 //-------------------------------------------------------------------------------
         //CREATE DATABASE AND WRITE
         database = Firebase.database
-        notesRef = database.getReference("groups")
+        groupsRef = database.getReference("groups")
         val notesRef2 = database.reference.child("path").child("111").child("222")
         val note1 = Note("123")
         val note2 = Note("abc", true)
         val note3 = Note("1a2b")
         val notesList = arrayListOf(note1, note2)
         val notesList2 = arrayListOf(note1, note2, note3)
-        val newGroupRef = notesRef.push()
+        val emptyNoteList = arrayListOf<Note>()
+        val newGroupRef = groupsRef.push()
+        val newNoteRef = groupsRef.child("-NNVh0CtgesTkoNuUCRG").child("notes").push()
+        val newUserIdRef = groupsRef.child("-NNVh0CtgesTkoNuUCRG").child("userId").push()
         val key = newGroupRef.key
 //        Log.e("1234", key!!)
         val userList = arrayListOf("12bfa", "ab123")
-        val newGroup = Group("Car", notesList2, userList, key)
+        val emptyUserList = arrayListOf<String>()
+        val newGroup = Group("Market", emptyNoteList, emptyUserList, key)
 //        newGroupRef.setValue(newGroup)
-
-//        //Creating new reference for note
-//        val newRef = notesRef.push()
-//        //Getting unique key of new reference
-//        val key = newRef.key
-//        Log.e("1234", key!!)
-//        //Creating a new Group class
-//        val group = Group(notesList2, key)
-//        //Pushing new Group
-//        newRef.setValue(group)
+        val newNote = Note("araba yazisi")
+//        newNoteRef.setValue(newNote)
+//        newUserIdRef.setValue(userEmail)
 
 //------------------------------------------------------------------------------------
         //UPDATE
@@ -85,44 +83,21 @@ class HomeFragment : Fragment() {
 //        notesRef.child("-NNBshFWr-YjutIivAzn").child("userIds").setValue(userList)
 
 //-------------------------------------------------------------------------------------
-        //READ
-//        notesRef.addValueEventListener(object : ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                for(i in snapshot.children) {
-//                    val group = i.getValue(Group::class.java)
-//                    if (group != null) {
-//                        Log.e("******","******")
-//                        Log.e("Key", "${i.key}")
-//                        for (j in group.notes!!){
-//                            Log.e("Note", j.note!!)
-//                            Log.e("isDrawn", "${j.drawn}")
-//                        }
-//                        for(j in group.userIds!!) {
-//                            Log.e("UserID", j)
-//                        }
-//                    }
-//                }
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                Log.w("value2", "Failed to read value.", error.toException())
-//            }
-//
-//        })
-//-------------------------------------------------------------------------------------
 
         titleList = arrayListOf()
         keyList = arrayListOf()
 
-        notesRef.get().addOnSuccessListener {
+        groupsRef.get().addOnSuccessListener {
             for (i in it.children) {
-                val group = i.getValue(Group::class.java)
-                if (group != null) {
-                    for (j in group.userIds!!) {
-                        if (j == userEmail) {
-                            titleList.add(group.title!!)
-                            keyList.add(group.key!!)
+                for (j in i.children) {
+                    for (k in j.children) {
+                        if (k.value == userEmail) {
+                            isAllowedToWrite = true
                         }
+                    }
+                    if (j.key == "z_title") {
+                        titleList.add(j.value.toString())
+                        isAllowedToWrite = false
                     }
                 }
             }
@@ -131,10 +106,60 @@ class HomeFragment : Fragment() {
             binding.recyclerView.adapter = homeAdapter
             homeAdapter.setOnItemClickListener(object : HomeAdapter.HomeListClickListener {
                 override fun onItemClicked(position: Int) {
-                    val action = HomeFragmentDirections.actionHomeFragmentToNoteFragment(keyList[position])
+                    val action =
+                        HomeFragmentDirections.actionHomeFragmentToNoteFragment(keyList[position])
                     findNavController().navigate(action)
                 }
             })
         }
+//****************************************************************************************************
+//        notesRef.get().addOnSuccessListener {
+//            for (i in it.children) {
+//                val group = i.getValue(Group::class.java)
+//                if (group != null) {
+//                    for (j in group.userIds!!) {
+//                        if (j == userEmail) {
+//                            titleList.add(group.title!!)
+//                            keyList.add(group.key!!)
+//                        }
+//                    }
+//                }
+//            }
+//            binding.recyclerView.layoutManager = GridLayoutManager(context, 2)
+//            homeAdapter = HomeAdapter(titleList)
+//            binding.recyclerView.adapter = homeAdapter
+//            homeAdapter.setOnItemClickListener(object : HomeAdapter.HomeListClickListener {
+//                override fun onItemClicked(position: Int) {
+//                    val action = HomeFragmentDirections.actionHomeFragmentToNoteFragment(keyList[position])
+//                    findNavController().navigate(action)
+//                }
+//            })
+//        }
+//****************************************************************************************************
+//        groupsRef.get().addOnSuccessListener {
+//            for (i in it.children) {
+//                for (j in i.children) {
+//                    if (j.key == "notes") {
+//                        for (k in j.children) {
+//                            for (l in k.children) {
+//                                if (l.key == "note") {
+//                                    println(l.value)
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//            binding.recyclerView.layoutManager = GridLayoutManager(context, 2)
+//            homeAdapter = HomeAdapter(titleList)
+//            binding.recyclerView.adapter = homeAdapter
+//            homeAdapter.setOnItemClickListener(object : HomeAdapter.HomeListClickListener {
+//                override fun onItemClicked(position: Int) {
+//                    val action = HomeFragmentDirections.actionHomeFragmentToNoteFragment(keyList[position])
+//                    findNavController().navigate(action)
+//                }
+//            })
+//        }
+//****************************************************************************************************
     }
 }
