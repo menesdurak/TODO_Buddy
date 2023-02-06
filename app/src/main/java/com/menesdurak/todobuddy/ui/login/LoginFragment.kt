@@ -64,8 +64,10 @@ class LoginFragment : Fragment() {
                 auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         Log.d("loginSuccess", "signInWithEmail:success")
-                        val user = auth.currentUser
-                        findNavController().navigate(R.id.homeFragment)
+                        val userMail = auth.currentUser!!.email
+                        val action =
+                            LoginFragmentDirections.actionLoginFragmentToHomeFragment(userMail!!)
+                        findNavController().navigate(action)
                     } else {
                         Log.w("loginFail", "signInWithEmail:failure", task.exception)
                         Toast.makeText(requireContext(), "Authentication failed.",
