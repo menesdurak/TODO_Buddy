@@ -35,7 +35,8 @@ class AddNoteFragment : Fragment() {
         _binding = FragmentAddNoteBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        groupKey = arguments?.getString("key").toString()
+        val args: AddNoteFragmentArgs by navArgs()
+        groupKey = args.key
 
         //CREATE DATABASE AND WRITE
         database = Firebase.database
@@ -47,26 +48,14 @@ class AddNoteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val args: AddNoteFragmentArgs by navArgs()
-        val key = args.key
-
         binding.btnAdd.setOnClickListener {
             val newNoteNote = binding.etNote.text.toString()
             val newNote = Note(newNoteNote)
             if (newNoteNote.isNotEmpty()) {
-                notesList = arrayListOf()
-
-                noteRef.get().addOnSuccessListener {
-                    for (i in it.children) {
-                        val note = i.getValue(Note::class.java)
-                        println(note!!.note)
-                    }
-                }
                 val push = noteRef.push()
                 push.setValue(newNote)
-//                println(notesList)
-//                val action = AddNoteFragmentDirections.actionAddNoteFragmentToNoteFragment(key)
-//                findNavController().navigate(action)
+                val action = AddNoteFragmentDirections.actionAddNoteFragmentToNoteFragment(groupKey)
+                findNavController().navigate(action)
             }
         }
     }
