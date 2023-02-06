@@ -1,6 +1,7 @@
 package com.menesdurak.todobuddy.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,8 +9,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.menesdurak.todobuddy.databinding.FragmentHomeBinding
@@ -79,32 +79,65 @@ class HomeFragment : Fragment() {
         titleList = arrayListOf()
         keyList = arrayListOf()
 
-        groupsRef.get().addOnSuccessListener {
-            for (i in it.children) {
-                for (j in i.children) {
-                    for (k in j.children) {
-                        if (k.value == userEmail) {
-                            isAllowedToAddTitle = true
+        val groupListener = object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (i in snapshot.children) {
+                    for (j in i.children) {
+                        for (k in j.children) {
+                            if (k.value == userEmail) {
+                                isAllowedToAddTitle = true
+                            }
+                        }
+                        if (j.key == "z_title" && isAllowedToAddTitle) {
+                            titleList.add(j.value.toString())
+                            keyList.add(i.key.toString())
+                            isAllowedToAddTitle = false
                         }
                     }
-                    if (j.key == "z_title" && isAllowedToAddTitle) {
-                        titleList.add(j.value.toString())
-                        keyList.add(i.key.toString())
-                        isAllowedToAddTitle = false
+                }
+                binding.recyclerView.layoutManager = GridLayoutManager(context, 2)
+                homeAdapter = HomeAdapter(titleList)
+                binding.recyclerView.adapter = homeAdapter
+                homeAdapter.setOnItemClickListener(object : HomeAdapter.HomeListClickListener {
+                    override fun onItemClicked(position: Int) {
+                        val action =
+                            HomeFragmentDirections.actionHomeFragmentToNoteFragment(keyList[position])
+                        findNavController().navigate(action)
                     }
-                }
+                })
             }
-            binding.recyclerView.layoutManager = GridLayoutManager(context, 2)
-            homeAdapter = HomeAdapter(titleList)
-            binding.recyclerView.adapter = homeAdapter
-            homeAdapter.setOnItemClickListener(object : HomeAdapter.HomeListClickListener {
-                override fun onItemClicked(position: Int) {
-                    val action =
-                        HomeFragmentDirections.actionHomeFragmentToNoteFragment(keyList[position])
-                    findNavController().navigate(action)
-                }
-            })
+            override fun onCancelled(error: DatabaseError) {
+                Log.w("1234", "Something bad happened")
+            }
         }
+        groupsRef.addValueEventListener(groupListener)
+
+//        groupsRef.get().addOnSuccessListener {
+//            for (i in it.children) {
+//                for (j in i.children) {
+//                    for (k in j.children) {
+//                        if (k.value == userEmail) {
+//                            isAllowedToAddTitle = true
+//                        }
+//                    }
+//                    if (j.key == "z_title" && isAllowedToAddTitle) {
+//                        titleList.add(j.value.toString())
+//                        keyList.add(i.key.toString())
+//                        isAllowedToAddTitle = false
+//                    }
+//                }
+//            }
+//            binding.recyclerView.layoutManager = GridLayoutManager(context, 2)
+//            homeAdapter = HomeAdapter(titleList)
+//            binding.recyclerView.adapter = homeAdapter
+//            homeAdapter.setOnItemClickListener(object : HomeAdapter.HomeListClickListener {
+//                override fun onItemClicked(position: Int) {
+//                    val action =
+//                        HomeFragmentDirections.actionHomeFragmentToNoteFragment(keyList[position])
+//                    findNavController().navigate(action)
+//                }
+//            })
+//        }
 
         binding.fabtnAddGroup.setOnClickListener {
             val action =
