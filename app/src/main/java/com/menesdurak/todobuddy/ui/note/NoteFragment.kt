@@ -1,5 +1,6 @@
 package com.menesdurak.todobuddy.ui.note
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -22,11 +25,14 @@ class NoteFragment : Fragment() {
     private val binding get() = _binding!!
 
     private var groupKey: String = "0"
+    private var userMail: String = "0"
     private lateinit var database: FirebaseDatabase
     private lateinit var noteRef: DatabaseReference
     private lateinit var notesList: ArrayList<Note>
     private lateinit var drawnList: ArrayList<Boolean>
     private lateinit var noteAdapter: NoteAdapter
+
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,13 +42,18 @@ class NoteFragment : Fragment() {
         _binding = FragmentNoteBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        groupKey = arguments?.getString("key").toString()
+        auth = Firebase.auth
 
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        groupKey = arguments?.getString("key").toString()
+        println(groupKey)
+        userMail = auth.currentUser!!.email!!
+        println(userMail)
 
         notesList = arrayListOf()
         drawnList = arrayListOf()
@@ -67,6 +78,13 @@ class NoteFragment : Fragment() {
 
         binding.fbAddNote.setOnClickListener {
             val action = NoteFragmentDirections.actionNoteFragmentToAddNoteFragment(key)
+            findNavController().navigate(action)
+        }
+
+        binding.btnDeleteGroup.setOnClickListener {
+            database.getReference("groups").child(groupKey).removeValue()
+            val action =
+                NoteFragmentDirections.actionNoteFragmentToHomeFragment(userMail)
             findNavController().navigate(action)
         }
     }

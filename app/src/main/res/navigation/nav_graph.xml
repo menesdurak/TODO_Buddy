@@ -15,7 +15,7 @@
             app:argType="string" />
         <action
             android:id="@+id/action_homeFragment_to_noteFragment"
-            app:destination="@id/noteFragment" />
+            app:destination="@id/noteFragment"/>
         <action
             android:id="@+id/action_homeFragment_to_addGroupFragment"
             app:destination="@id/addGroupFragment" />
@@ -48,7 +48,7 @@
         tools:layout="@layout/fragment_note" >
         <action
             android:id="@+id/action_noteFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"/>
         <action
             android:id="@+id/action_noteFragment_to_addNoteFragment"
             app:destination="@id/addNoteFragment" />
