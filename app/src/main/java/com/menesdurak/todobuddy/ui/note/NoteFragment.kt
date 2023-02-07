@@ -29,6 +29,7 @@ class NoteFragment : Fragment() {
     private lateinit var database: FirebaseDatabase
     private lateinit var noteRef: DatabaseReference
     private lateinit var notesList: ArrayList<Note>
+    private lateinit var keyList: ArrayList<String>
     private lateinit var drawnList: ArrayList<Boolean>
     private lateinit var noteAdapter: NoteAdapter
 
@@ -56,6 +57,7 @@ class NoteFragment : Fragment() {
         println(userMail)
 
         notesList = arrayListOf()
+        keyList = arrayListOf()
         drawnList = arrayListOf()
 
         //CREATE DATABASE AND WRITE
@@ -66,14 +68,19 @@ class NoteFragment : Fragment() {
             for (i in it.children) {
                 val note = i.getValue(Note::class.java)
                 notesList.add(note!!)
+                keyList.add(i.key!!)
             }
-
+            println(keyList)
             binding.recyclerView.layoutManager = LinearLayoutManager(context)
             noteAdapter = NoteAdapter(notesList)
             binding.recyclerView.adapter = noteAdapter
             noteAdapter.setOnDeleteClickListener(object : NoteAdapter.NoteDeleteClickListener{
                 override fun onDeleteClicked(position: Int) {
                     println("222222222222")
+                    noteRef.child(keyList[position]).removeValue()
+                    val action =
+                        NoteFragmentDirections.actionNoteFragmentToHomeFragment(userMail)
+                    findNavController().navigate(action)
                 }
             })
         }
