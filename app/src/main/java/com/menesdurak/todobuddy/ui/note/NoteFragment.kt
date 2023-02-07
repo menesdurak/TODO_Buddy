@@ -76,12 +76,23 @@ class NoteFragment : Fragment() {
             binding.recyclerView.adapter = noteAdapter
             noteAdapter.setOnDeleteClickListener(object : NoteAdapter.NoteDeleteClickListener{
                 override fun onDeleteClicked(position: Int) {
-                    println("222222222222")
                     noteRef.child(keyList[position]).removeValue()
                     val action =
                         NoteFragmentDirections.actionNoteFragmentToHomeFragment(userMail)
                     findNavController().navigate(action)
                 }
+            })
+            noteAdapter.setOnDoneClickListener(object : NoteAdapter.NoteDoneClickListener{
+                override fun onDoneClicked(position: Int) {
+                    val childUpdate = hashMapOf<String, Any>(
+                        "/drawn" to !(notesList[position].drawn!!)
+                    )
+                    noteRef.child(keyList[position]).updateChildren(childUpdate)
+                    val action =
+                        NoteFragmentDirections.actionNoteFragmentToHomeFragment(userMail)
+                    findNavController().navigate(action)
+                }
+
             })
         }
 
