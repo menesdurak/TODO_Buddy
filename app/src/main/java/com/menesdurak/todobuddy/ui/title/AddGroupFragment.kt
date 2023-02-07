@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.firebase.database.DatabaseReference
@@ -56,13 +57,19 @@ class AddGroupFragment : Fragment() {
         binding.btnCreate.setOnClickListener {
             val title = binding.etTitle.text.toString()
             val buddyMail = binding.etBuddyMail.text.toString()
-            val newGroup = Group(title, emptyNoteList, emptyUserList, key)
-            newGroupRef.setValue(newGroup)
-            newUserIdRef.setValue(userEmail)
-            newUserIdRef2.setValue(buddyMail)
-            val action =
-                AddGroupFragmentDirections.actionAddGroupFragmentToHomeFragment(userEmail)
-            findNavController().navigate(action)
+            if (title.isNotEmpty() && buddyMail.isNotEmpty()) {
+                val newGroup = Group(title, emptyNoteList, emptyUserList, key)
+                newGroupRef.setValue(newGroup)
+                newUserIdRef.setValue(userEmail)
+                newUserIdRef2.setValue(buddyMail)
+                val action =
+                    AddGroupFragmentDirections.actionAddGroupFragmentToHomeFragment(userEmail)
+                findNavController().navigate(action)
+            } else if (title.isEmpty()) {
+                Toast.makeText(requireContext(), "Enter a group title", Toast.LENGTH_SHORT).show()
+            } else if (buddyMail.isEmpty()) {
+                Toast.makeText(requireContext(), "Enter your buddy's e-mail", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

@@ -92,7 +92,6 @@ class NoteFragment : Fragment() {
                         NoteFragmentDirections.actionNoteFragmentToHomeFragment(userMail)
                     findNavController().navigate(action)
                 }
-
             })
         }
 
