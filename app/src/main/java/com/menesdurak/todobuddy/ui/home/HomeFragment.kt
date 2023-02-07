@@ -112,87 +112,10 @@ class HomeFragment : Fragment() {
         }
         groupsRef.addValueEventListener(groupListener)
 
-//        groupsRef.get().addOnSuccessListener {
-//            for (i in it.children) {
-//                for (j in i.children) {
-//                    for (k in j.children) {
-//                        if (k.value == userEmail) {
-//                            isAllowedToAddTitle = true
-//                        }
-//                    }
-//                    if (j.key == "z_title" && isAllowedToAddTitle) {
-//                        titleList.add(j.value.toString())
-//                        keyList.add(i.key.toString())
-//                        isAllowedToAddTitle = false
-//                    }
-//                }
-//            }
-//            binding.recyclerView.layoutManager = GridLayoutManager(context, 2)
-//            homeAdapter = HomeAdapter(titleList)
-//            binding.recyclerView.adapter = homeAdapter
-//            homeAdapter.setOnItemClickListener(object : HomeAdapter.HomeListClickListener {
-//                override fun onItemClicked(position: Int) {
-//                    val action =
-//                        HomeFragmentDirections.actionHomeFragmentToNoteFragment(keyList[position])
-//                    findNavController().navigate(action)
-//                }
-//            })
-//        }
-
         binding.fabtnAddGroup.setOnClickListener {
             val action =
                 HomeFragmentDirections.actionHomeFragmentToAddGroupFragment(userEmail)
             findNavController().navigate(action)
         }
-
-//*************************************************************************************************
-//        notesRef.get().addOnSuccessListener {
-//            for (i in it.children) {
-//                val group = i.getValue(Group::class.java)
-//                if (group != null) {
-//                    for (j in group.userIds!!) {
-//                        if (j == userEmail) {
-//                            titleList.add(group.title!!)
-//                            keyList.add(group.key!!)
-//                        }
-//                    }
-//                }
-//            }
-//            binding.recyclerView.layoutManager = GridLayoutManager(context, 2)
-//            homeAdapter = HomeAdapter(titleList)
-//            binding.recyclerView.adapter = homeAdapter
-//            homeAdapter.setOnItemClickListener(object : HomeAdapter.HomeListClickListener {
-//                override fun onItemClicked(position: Int) {
-//                    val action = HomeFragmentDirections.actionHomeFragmentToNoteFragment(keyList[position])
-//                    findNavController().navigate(action)
-//                }
-//            })
-//        }
-//*************************************************************************************************
-//        groupsRef.get().addOnSuccessListener {
-//            for (i in it.children) {
-//                for (j in i.children) {
-//                    if (j.key == "notes") {
-//                        for (k in j.children) {
-//                            for (l in k.children) {
-//                                if (l.key == "note") {
-//                                    println(l.value)
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//            binding.recyclerView.layoutManager = GridLayoutManager(context, 2)
-//            homeAdapter = HomeAdapter(titleList)
-//            binding.recyclerView.adapter = homeAdapter
-//            homeAdapter.setOnItemClickListener(object : HomeAdapter.HomeListClickListener {
-//                override fun onItemClicked(position: Int) {
-//                    val action = HomeFragmentDirections.actionHomeFragmentToNoteFragment(keyList[position])
-//                    findNavController().navigate(action)
-//                }
-//            })
-//        }
-//*************************************************************************************************
     }
 }
