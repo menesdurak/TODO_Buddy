@@ -71,6 +71,11 @@ class NoteFragment : Fragment() {
             binding.recyclerView.layoutManager = LinearLayoutManager(context)
             noteAdapter = NoteAdapter(notesList)
             binding.recyclerView.adapter = noteAdapter
+            noteAdapter.setOnDeleteClickListener(object : NoteAdapter.NoteDeleteClickListener{
+                override fun onDeleteClicked(position: Int) {
+                    println("222222222222")
+                }
+            })
         }
 
         val args: NoteFragmentArgs by navArgs()

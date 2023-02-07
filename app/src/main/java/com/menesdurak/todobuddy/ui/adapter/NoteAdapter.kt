@@ -4,17 +4,26 @@ import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.menesdurak.todobuddy.R
 import com.menesdurak.todobuddy.model.Note
 
 class NoteAdapter(private val list: ArrayList<Note>): RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
-    class NoteViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
+    private lateinit var mListener: NoteDeleteClickListener
+    class NoteViewHolder(itemView: View, listener: NoteDeleteClickListener): RecyclerView.ViewHolder(itemView) {
+        init {
+            itemView.findViewById<ImageView>(R.id.ivDelete).setOnClickListener {
+                listener.onDeleteClicked(adapterPosition)
+                println("1111111111111111")
+            }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         return NoteViewHolder(LayoutInflater.from(parent.context)
-            .inflate(R.layout.row_note, parent, false))
+            .inflate(R.layout.row_note, parent, false), mListener)
     }
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
@@ -29,4 +38,12 @@ class NoteAdapter(private val list: ArrayList<Note>): RecyclerView.Adapter<NoteA
     }
 
     override fun getItemCount(): Int = list.size
+
+    interface NoteDeleteClickListener {
+        fun onDeleteClicked(position: Int)
+    }
+
+    fun setOnDeleteClickListener(listener: NoteDeleteClickListener) {
+        mListener = listener
+    }
 }
