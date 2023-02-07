@@ -12,18 +12,23 @@ import com.menesdurak.todobuddy.model.Note
 
 class NoteAdapter(private val list: ArrayList<Note>): RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
     private lateinit var mListener: NoteDeleteClickListener
-    class NoteViewHolder(itemView: View, listener: NoteDeleteClickListener): RecyclerView.ViewHolder(itemView) {
+    private lateinit var nListener: NoteDoneClickListener
+    class NoteViewHolder(itemView: View,
+                         listener: NoteDeleteClickListener,
+                         listener2: NoteDoneClickListener) : RecyclerView.ViewHolder(itemView) {
         init {
             itemView.findViewById<ImageView>(R.id.ivDelete).setOnClickListener {
                 listener.onDeleteClicked(adapterPosition)
-                println("1111111111111111")
+            }
+            itemView.findViewById<ImageView>(R.id.ivDone).setOnClickListener {
+                listener2.onDoneClicked(adapterPosition)
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         return NoteViewHolder(LayoutInflater.from(parent.context)
-            .inflate(R.layout.row_note, parent, false), mListener)
+            .inflate(R.layout.row_note, parent, false), mListener, nListener)
     }
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
@@ -43,7 +48,15 @@ class NoteAdapter(private val list: ArrayList<Note>): RecyclerView.Adapter<NoteA
         fun onDeleteClicked(position: Int)
     }
 
+    interface NoteDoneClickListener {
+        fun onDoneClicked(position: Int)
+    }
+
     fun setOnDeleteClickListener(listener: NoteDeleteClickListener) {
         mListener = listener
+    }
+
+    fun setOnDoneClickListener(listener: NoteDoneClickListener) {
+        nListener = listener
     }
 }
