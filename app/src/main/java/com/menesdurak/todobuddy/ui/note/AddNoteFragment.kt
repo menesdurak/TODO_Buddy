@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -51,11 +52,13 @@ class AddNoteFragment : Fragment() {
         binding.btnAdd.setOnClickListener {
             val newNoteNote = binding.etNote.text.toString()
             val newNote = Note(newNoteNote)
-            if (newNoteNote.isNotEmpty()) {
+            if (newNoteNote.isNotBlank()) {
                 val push = noteRef.push()
                 push.setValue(newNote)
                 val action = AddNoteFragmentDirections.actionAddNoteFragmentToNoteFragment(groupKey)
                 findNavController().navigate(action)
+            } else {
+                Toast.makeText(requireContext(), "Enter a note", Toast.LENGTH_SHORT).show()
             }
         }
     }
