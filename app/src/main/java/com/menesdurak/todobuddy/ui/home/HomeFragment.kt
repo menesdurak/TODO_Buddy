@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
@@ -15,6 +16,7 @@ import com.google.firebase.ktx.Firebase
 import com.menesdurak.todobuddy.databinding.FragmentHomeBinding
 import com.menesdurak.todobuddy.model.Group
 import com.menesdurak.todobuddy.model.Note
+import com.menesdurak.todobuddy.ui.MainActivity
 import com.menesdurak.todobuddy.ui.adapter.HomeAdapter
 
 class HomeFragment : Fragment() {
@@ -46,6 +48,8 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        activity?.title = "Note Titles"
 
 //-------------------------------------------------------------------------------
         //CREATE DATABASE AND WRITE

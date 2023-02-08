@@ -49,6 +49,8 @@ class AddNoteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        activity?.title = "Add Note"
+
         binding.btnAdd.setOnClickListener {
             val newNoteNote = binding.etNote.text.toString()
             val newNote = Note(newNoteNote)

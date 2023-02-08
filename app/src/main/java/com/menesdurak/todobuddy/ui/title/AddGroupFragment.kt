@@ -47,6 +47,8 @@ class AddGroupFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        activity?.title = "Add Note Titles"
+
         val emptyNoteList = arrayListOf<Note>()
         val emptyUserList = arrayListOf<String>()
         val newGroupRef = groupsRef.push()

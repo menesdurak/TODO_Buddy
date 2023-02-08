@@ -51,6 +51,8 @@ class NoteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        activity?.title = "Notes"
+
         groupKey = arguments?.getString("key").toString()
         println(groupKey)
         userMail = auth.currentUser!!.email!!
