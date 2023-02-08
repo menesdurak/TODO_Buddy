@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.note.NoteFragment">
+    tools:context=".ui.note.NoteFragment"
+    android:background="@color/back_medium">
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -31,7 +32,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/fbAddNote"
-        app:layout_constraintBottom_toBottomOf="@id/fbAddNote"/>
+        app:layout_constraintBottom_toBottomOf="@id/fbAddNote"
+        android:backgroundTint="@color/red"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fbAddNote"

@@ -2,7 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/back_lightest"
+    android:layout_margin="8dp"
+    android:padding="2dp">
 
     <TextView
         android:id="@+id/tvRowTitle"
@@ -10,6 +13,9 @@
         android:layout_height="wrap_content"
         tools:text="Title"
         android:textSize="20sp"
-        android:gravity="center"/>
+        android:textStyle="bold"
+        android:maxLength="15"
+        android:gravity="center"
+        android:textColor="@color/text_black"/>
 
 </LinearLayout>

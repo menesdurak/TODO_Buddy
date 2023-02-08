@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.title.AddGroupFragment">
+    tools:context=".ui.title.AddGroupFragment"
+    android:background="@color/back_medium">
 
     <EditText
         android:id="@+id/etTitle"
@@ -13,7 +14,10 @@
         android:hint="Enter your notes title"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="36dp"
+        android:layout_marginHorizontal="16dp"
+        android:background="@color/back_lightest"/>
 
     <EditText
         android:id="@+id/etBuddyMail"
@@ -22,7 +26,10 @@
         android:hint="Enter your buddy's e-mail"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etTitle"/>
+        app:layout_constraintTop_toBottomOf="@+id/etTitle"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="16dp"
+        android:background="@color/back_lightest"/>
 
     <Button
         android:id="@+id/btnCreate"
@@ -31,6 +38,7 @@
         android:text="Create"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etBuddyMail"/>
+        app:layout_constraintTop_toBottomOf="@+id/etBuddyMail"
+        android:layout_marginTop="16dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
