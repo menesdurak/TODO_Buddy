@@ -52,7 +52,7 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        activity?.title = "Add Note"
+        activity?.title = "Login"
 
         binding.tvSignUp.setOnClickListener {
             findNavController().navigate(R.id.signUpFragment)
