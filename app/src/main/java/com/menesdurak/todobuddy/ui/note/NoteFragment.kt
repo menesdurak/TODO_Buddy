@@ -19,6 +19,7 @@ import com.google.firebase.ktx.Firebase
 import com.menesdurak.todobuddy.databinding.FragmentNoteBinding
 import com.menesdurak.todobuddy.model.Group
 import com.menesdurak.todobuddy.model.Note
+import com.menesdurak.todobuddy.ui.MainActivity
 import com.menesdurak.todobuddy.ui.adapter.NoteAdapter
 
 class NoteFragment : Fragment() {
@@ -36,6 +37,12 @@ class NoteFragment : Fragment() {
     private lateinit var noteAdapter: NoteAdapter
 
     private lateinit var auth: FirebaseAuth
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        (activity as MainActivity).showActionBar()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

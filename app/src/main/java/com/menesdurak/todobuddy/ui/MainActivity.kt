@@ -15,6 +15,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.ktx.app
 import com.menesdurak.todobuddy.R
 import com.menesdurak.todobuddy.databinding.ActivityMainBinding
+import com.menesdurak.todobuddy.ui.home.HomeFragmentDirections
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -40,6 +41,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.home -> {
+                val bundle = Bundle()
+                bundle.putString("email", auth.currentUser?.email)
+                navHostFragment.navController.navigate(R.id.homeFragment, bundle)
+            }
             R.id.sign_out -> {
                 auth.signOut()
                 navHostFragment.navController.navigate(R.id.loginFragment)
@@ -50,5 +56,13 @@ class MainActivity : AppCompatActivity() {
 
     fun setActionBarTitle(title: String) {
         supportActionBar?.title = title
+    }
+
+    fun hideActionBar() {
+        supportActionBar?.hide()
+    }
+
+    fun showActionBar() {
+        supportActionBar?.show()
     }
 }

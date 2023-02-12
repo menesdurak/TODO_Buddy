@@ -19,6 +19,7 @@ import com.menesdurak.todobuddy.databinding.FragmentHomeBinding
 import com.menesdurak.todobuddy.databinding.FragmentNoteBinding
 import com.menesdurak.todobuddy.model.Group
 import com.menesdurak.todobuddy.model.Note
+import com.menesdurak.todobuddy.ui.MainActivity
 
 class AddNoteFragment : Fragment() {
 
@@ -29,6 +30,12 @@ class AddNoteFragment : Fragment() {
     private lateinit var database: FirebaseDatabase
     private lateinit var noteRef: DatabaseReference
     private lateinit var notesList: ArrayList<String>
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        (activity as MainActivity).showActionBar()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?

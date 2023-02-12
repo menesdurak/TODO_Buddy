@@ -17,6 +17,7 @@ import com.menesdurak.todobuddy.databinding.FragmentAddGroupBinding
 import com.menesdurak.todobuddy.databinding.FragmentAddNoteBinding
 import com.menesdurak.todobuddy.model.Group
 import com.menesdurak.todobuddy.model.Note
+import com.menesdurak.todobuddy.ui.MainActivity
 import com.menesdurak.todobuddy.ui.home.HomeFragmentArgs
 
 class AddGroupFragment : Fragment() {
@@ -27,6 +28,12 @@ class AddGroupFragment : Fragment() {
     private lateinit var database: FirebaseDatabase
     private lateinit var groupsRef: DatabaseReference
     private var userEmail: String = "0"
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        (activity as MainActivity).showActionBar()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?

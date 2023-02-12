@@ -1,5 +1,6 @@
 package com.menesdurak.todobuddy.ui.login
 
+import android.app.ActionBar
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,6 +14,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.menesdurak.todobuddy.R
 import com.menesdurak.todobuddy.databinding.FragmentLoginBinding
+import com.menesdurak.todobuddy.ui.MainActivity
 
 class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
@@ -26,6 +28,8 @@ class LoginFragment : Fragment() {
         super.onCreate(savedInstanceState)
         // Initialize Firebase Auth
         auth = Firebase.auth
+
+        (activity as MainActivity).hideActionBar()
     }
 
     override fun onStart() {
@@ -46,13 +50,14 @@ class LoginFragment : Fragment() {
     ): View? {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         val view = binding.root
+
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        activity?.title = "Login"
+//        activity?.title = "Login"
 
         binding.tvSignUp.setOnClickListener {
             findNavController().navigate(R.id.signUpFragment)

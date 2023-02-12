@@ -1,5 +1,6 @@
 package com.menesdurak.todobuddy.ui.sign
 
+import android.app.ActionBar
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,6 +14,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.menesdurak.todobuddy.R
 import com.menesdurak.todobuddy.databinding.FragmentSignUpBinding
+import com.menesdurak.todobuddy.ui.MainActivity
 
 class SignUpFragment : Fragment() {
 
@@ -28,6 +30,8 @@ class SignUpFragment : Fragment() {
 
         // Initialize Firebase Auth
         auth = Firebase.auth
+
+        (activity as MainActivity).hideActionBar()
     }
 
     override fun onCreateView(
@@ -37,13 +41,14 @@ class SignUpFragment : Fragment() {
     ): View? {
         _binding = FragmentSignUpBinding.inflate(inflater, container, false)
         val view = binding.root
+
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        activity?.title = "Sign Up"
+//        activity?.title = "Sign Up"
 
         binding.btnSignUp.setOnClickListener {
 

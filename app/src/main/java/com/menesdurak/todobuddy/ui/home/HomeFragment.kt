@@ -31,6 +31,12 @@ class HomeFragment : Fragment() {
     private var userEmail: String = "0"
     private var isAllowedToAddTitle: Boolean = false
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        (activity as MainActivity).showActionBar()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
