@@ -1,5 +1,7 @@
 package com.menesdurak.todobuddy.ui.note
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -76,7 +78,7 @@ class NoteFragment : Fragment() {
             binding.recyclerView.layoutManager = LinearLayoutManager(context)
             noteAdapter = NoteAdapter(notesList)
             binding.recyclerView.adapter = noteAdapter
-            noteAdapter.setOnDeleteClickListener(object : NoteAdapter.NoteDeleteClickListener{
+            noteAdapter.setOnDeleteClickListener(object : NoteAdapter.NoteDeleteClickListener {
                 override fun onDeleteClicked(position: Int) {
                     noteRef.child(keyList[position]).removeValue()
                     val action =
@@ -84,7 +86,7 @@ class NoteFragment : Fragment() {
                     findNavController().navigate(action)
                 }
             })
-            noteAdapter.setOnDoneClickListener(object : NoteAdapter.NoteDoneClickListener{
+            noteAdapter.setOnDoneClickListener(object : NoteAdapter.NoteDoneClickListener {
                 override fun onDoneClicked(position: Int) {
                     val childUpdate = hashMapOf<String, Any>(
                         "/drawn" to !(notesList[position].drawn!!)
@@ -106,10 +108,26 @@ class NoteFragment : Fragment() {
         }
 
         binding.btnDeleteGroup.setOnClickListener {
-            database.getReference("groups").child(groupKey).removeValue()
-            val action =
-                NoteFragmentDirections.actionNoteFragmentToHomeFragment(userMail)
-            findNavController().navigate(action)
+            val alertDialog: AlertDialog? = activity?.let {
+                val builder = AlertDialog.Builder(it)
+                builder.apply {
+                    setTitle("Delete Group")
+                    setMessage("Do you want to delete this group?")
+                    setPositiveButton("Yes",
+                        DialogInterface.OnClickListener { _, _ ->
+                            database.getReference("groups").child(groupKey).removeValue()
+                            val action =
+                                NoteFragmentDirections.actionNoteFragmentToHomeFragment(userMail)
+                            findNavController().navigate(action)
+                        })
+                    setNegativeButton("No",
+                        DialogInterface.OnClickListener { _, _ ->
+
+                        })
+                }
+                builder.create()
+            }
+            alertDialog?.show()
         }
     }
 }
