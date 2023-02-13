@@ -27,4 +27,8 @@
     <string name="enter_a_note">Notunuzu yazın.</string>
     <string name="authentication_failed">Kimlik doğrulama hatası</string>
     <string name="enter_a_group_title">Grup başlığı girin</string>
+    <string name="note_titles">Not Başlıkları</string>
+    <string name="add_note">Not Ekle</string>
+    <string name="notes">Notlar</string>
+    <string name="add_note_title">Not Başlığı Ekle</string>
 </resources>

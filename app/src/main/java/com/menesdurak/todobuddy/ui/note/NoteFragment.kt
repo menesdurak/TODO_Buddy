@@ -58,7 +58,7 @@ class NoteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        activity?.title = "Notes"
+        activity?.title = getString(com.menesdurak.todobuddy.R.string.notes)
 
         groupKey = arguments?.getString("key").toString()
         println(groupKey)

@@ -41,7 +41,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val view = binding.root
 
@@ -55,7 +55,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        activity?.title = "Note Titles"
+        activity?.title = getString(com.menesdurak.todobuddy.R.string.note_titles)
 
         //CREATE DATABASE
         database = Firebase.database

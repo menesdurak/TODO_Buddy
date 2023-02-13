@@ -27,4 +27,8 @@
     <string name="enter_a_note">Enter a note</string>
     <string name="authentication_failed">Authentication failed.</string>
     <string name="enter_a_group_title">Enter a group title</string>
+    <string name="note_titles">Note Titles</string>
+    <string name="add_note">Add Note</string>
+    <string name="notes">Notes</string>
+    <string name="add_note_title">Add Note Title</string>
 </resources>
