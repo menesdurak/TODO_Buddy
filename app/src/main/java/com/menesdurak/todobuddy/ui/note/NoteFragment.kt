@@ -2,7 +2,6 @@ package com.menesdurak.todobuddy.ui.note
 
 import android.app.AlertDialog
 import android.content.DialogInterface
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +16,6 @@ import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.menesdurak.todobuddy.databinding.FragmentNoteBinding
-import com.menesdurak.todobuddy.model.Group
 import com.menesdurak.todobuddy.model.Note
 import com.menesdurak.todobuddy.ui.MainActivity
 import com.menesdurak.todobuddy.ui.adapter.NoteAdapter
@@ -48,7 +46,7 @@ class NoteFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentNoteBinding.inflate(inflater, container, false)
         val view = binding.root
 
@@ -118,16 +116,16 @@ class NoteFragment : Fragment() {
             val alertDialog: AlertDialog? = activity?.let {
                 val builder = AlertDialog.Builder(it)
                 builder.apply {
-                    setTitle("Delete Group")
-                    setMessage("Do you want to delete this group?")
-                    setPositiveButton("Yes",
+                    setTitle(view.resources.getString(com.menesdurak.todobuddy.R.string.delete_group))
+                    setMessage(com.menesdurak.todobuddy.R.string.do_you_want_to_delete_this_group)
+                    setPositiveButton(com.menesdurak.todobuddy.R.string.yes,
                         DialogInterface.OnClickListener { _, _ ->
                             database.getReference("groups").child(groupKey).removeValue()
                             val action =
                                 NoteFragmentDirections.actionNoteFragmentToHomeFragment(userMail)
                             findNavController().navigate(action)
                         })
-                    setNegativeButton("No",
+                    setNegativeButton(com.menesdurak.todobuddy.R.string.no,
                         DialogInterface.OnClickListener { _, _ ->
 
                         })

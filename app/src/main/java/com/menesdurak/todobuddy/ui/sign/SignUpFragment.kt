@@ -38,7 +38,7 @@ class SignUpFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentSignUpBinding.inflate(inflater, container, false)
         val view = binding.root
 
@@ -62,7 +62,7 @@ class SignUpFragment : Fragment() {
                         findNavController().navigate(R.id.loginFragment)
                     } else {
                         Log.w("signUpFail", "createUserWithEmail:failure", task.exception)
-                        Toast.makeText(requireContext(), "Authentication failed.",
+                        Toast.makeText(requireContext(), resources.getString(R.string.authentication_failed),
                             Toast.LENGTH_SHORT).show()
                     }
                 }

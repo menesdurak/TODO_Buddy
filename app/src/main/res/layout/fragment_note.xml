@@ -28,7 +28,7 @@
         android:id="@+id/btnDeleteGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Delete Group"
+        android:text="@string/delete_group"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/fbAddNote"
@@ -44,6 +44,6 @@
         android:layout_marginBottom="24dp"
         android:layout_marginEnd="24dp"
         android:src="@drawable/ic_add"
-        android:contentDescription="Add new note button"/>
+        android:contentDescription="@string/add_new_note_button"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

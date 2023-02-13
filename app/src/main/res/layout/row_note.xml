@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_done"
         android:layout_weight="1"
-        android:contentDescription="Done icon" />
+        android:contentDescription="@string/done_icon" />
 
     <ImageView
         android:id="@+id/ivDelete"
@@ -32,6 +32,6 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_delete"
         android:layout_weight="1"
-        android:contentDescription="Delete icon" />
+        android:contentDescription="@string/delete_icon" />
 
 </LinearLayout>

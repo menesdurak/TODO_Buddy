@@ -57,34 +57,9 @@ class HomeFragment : Fragment() {
 
         activity?.title = "Note Titles"
 
-//-------------------------------------------------------------------------------
-        //CREATE DATABASE AND WRITE
+        //CREATE DATABASE
         database = Firebase.database
         groupsRef = database.getReference("groups")
-        val emptyNoteList = arrayListOf<Note>()
-        val emptyUserList = arrayListOf<String>()
-        val newGroupRef = groupsRef.push()
-        val newNoteRef = groupsRef.child("-NNVh0CtgesTkoNuUCRG").child("notes").push()
-        val newUserIdRef = groupsRef.child("-NNVsUJdz6lwyj_uP2Sy").child("userId").push()
-        val key = newGroupRef.key
-        val newGroup = Group("Car", emptyNoteList, emptyUserList, key)
-//        newGroupRef.setValue(newGroup)
-        val newNote = Note("market arabasi")
-//        newNoteRef.setValue(newNote)
-//        newUserIdRef.setValue(userEmail)
-
-//------------------------------------------------------------------------------------
-        //UPDATE
-//        val newNote = Note("1aaaaa")
-//        val newList = notesList.add(newNote)
-//        val updateUsers = hashMapOf<String, Any>(
-//            "userIds" to "abc123a"
-//        )
-//        userList.add("3456")
-//        notesRef.child("-NNBp0ELFnsHt4fvLFWZ").updateChildren(updateUsers)
-//        notesRef.child("-NNBshFWr-YjutIivAzn").child("userIds").setValue(userList)
-
-//-------------------------------------------------------------------------------------
 
         titleList = arrayListOf()
         keyList = arrayListOf()

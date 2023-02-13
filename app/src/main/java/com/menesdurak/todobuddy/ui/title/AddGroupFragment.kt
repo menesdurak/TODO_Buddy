@@ -75,9 +75,9 @@ class AddGroupFragment : Fragment() {
                     AddGroupFragmentDirections.actionAddGroupFragmentToHomeFragment(userEmail)
                 findNavController().navigate(action)
             } else if (title.isEmpty()) {
-                Toast.makeText(requireContext(), "Enter a group title", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), resources.getString(R.string.enter_a_group_title), Toast.LENGTH_SHORT).show()
             } else if (buddyMail.isEmpty()) {
-                Toast.makeText(requireContext(), "Enter your buddy's e-mail", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), resources.getString(R.string.enter_your_buddy_s_e_mail), Toast.LENGTH_SHORT).show()
             }
         }
     }

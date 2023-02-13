@@ -67,7 +67,7 @@ class AddNoteFragment : Fragment() {
                 val action = AddNoteFragmentDirections.actionAddNoteFragmentToNoteFragment(groupKey)
                 findNavController().navigate(action)
             } else {
-                Toast.makeText(requireContext(), "Enter a note", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), resources.getString(R.string.enter_a_note), Toast.LENGTH_SHORT).show()
             }
         }
     }

@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">TODO Buddy</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="enter_your_notes_title">Notunuzun başlığını girin</string>
+    <string name="enter_your_buddy_s_e_mail">Arkadaşınızın e-mailini girin</string>
+    <string name="create">Oluştur</string>
+    <string name="write_your_note_here">Notunuzu buraya yazın</string>
+    <string name="add">Ekle</string>
+    <string name="button_for_adding_new_group">Yeni grup eklemek için buton</string>
+    <string name="e_mail">E-mail</string>
+    <string name="password">Şifre</string>
+    <string name="login">Giriş</string>
+    <string name="don_t_have_an_account">Hesabın yok mu?</string>
+    <string name="click_here_to_sign_up">Hesap oluşturmak için tıkla.</string>
+    <string name="delete_group">Grubu Sil</string>
+    <string name="do_you_want_to_delete_this_group">Bu grubu silmek ister misin?</string>
+    <string name="add_new_note_button">Yeni not eklemek için buton</string>
+    <string name="sign_up">Kayıt Ol</string>
+    <string name="done_icon">Tamamlandı ikonu</string>
+    <string name="delete_icon">Sil ikonu</string>
+    <string name="home">Ana Sayfa</string>
+    <string name="sign_out">Hesaptan Çık</string>
+    <string name="delete_note">Notu Sil</string>
+    <string name="do_you_want_to_delete_this_note">Bu notu silmek ister misin?</string>
+    <string name="yes">Evet</string>
+    <string name="no">Hayır</string>
+    <string name="enter_a_note">Notunuzu yazın.</string>
+    <string name="authentication_failed">Kimlik doğrulama hatası</string>
+    <string name="enter_a_group_title">Grup başlığı girin</string>
+</resources>

@@ -1,5 +1,7 @@
 package com.menesdurak.todobuddy.ui.adapter
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +20,24 @@ class NoteAdapter(private val list: ArrayList<Note>): RecyclerView.Adapter<NoteA
                          listener2: NoteDoneClickListener) : RecyclerView.ViewHolder(itemView) {
         init {
             itemView.findViewById<ImageView>(R.id.ivDelete).setOnClickListener {
-                listener.onDeleteClicked(adapterPosition)
+                val alertDialog: AlertDialog? = itemView.let {
+                    val builder = AlertDialog.Builder(itemView.context)
+                    builder.apply {
+                        setTitle(itemView.resources.getString(R.string.delete_note))
+                        setMessage(itemView.resources.getString(R.string.do_you_want_to_delete_this_note))
+                        setPositiveButton(itemView.resources.getString(R.string.yes),
+                            DialogInterface.OnClickListener { _, _ ->
+                                listener.onDeleteClicked(adapterPosition)
+                            })
+                        setNegativeButton(itemView.resources.getString(R.string.no),
+                            DialogInterface.OnClickListener { _, _ ->
+
+                            })
+                    }
+                    builder.create()
+                }
+                alertDialog?.show()
+
             }
             itemView.findViewById<ImageView>(R.id.ivDone).setOnClickListener {
                 listener2.onDoneClicked(adapterPosition)
