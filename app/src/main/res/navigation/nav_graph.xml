@@ -6,78 +6,8 @@
     app:startDestination="@id/loginFragment">
 
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.menesdurak.todobuddy.ui.home.HomeFragment"
-        android:label="Home"
-        tools:layout="@layout/fragment_home" >
-        <argument
-            android:name="email"
-            app:argType="string" />
-        <action
-            android:id="@+id/action_homeFragment_to_noteFragment"
-            app:destination="@id/noteFragment"/>
-        <action
-            android:id="@+id/action_homeFragment_to_addGroupFragment"
-            app:destination="@id/addGroupFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/loginFragment"
-        android:name="com.menesdurak.todobuddy.ui.login.LoginFragment"
-        android:label="Login"
-        tools:layout="@layout/fragment_login" >
-        <action
-            android:id="@+id/action_loginFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
-        <action
-            android:id="@+id/action_loginFragment_to_signUpFragment"
-            app:destination="@id/signUpFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/signUpFragment"
-        android:name="com.menesdurak.todobuddy.ui.sign.SignUpFragment"
-        android:label="Sign Up"
-        tools:layout="@layout/fragment_sign_up" >
-        <action
-            android:id="@+id/action_signUpFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/noteFragment"
-        android:name="com.menesdurak.todobuddy.ui.note.NoteFragment"
-        android:label="Notes"
-        tools:layout="@layout/fragment_note" >
-        <action
-            android:id="@+id/action_noteFragment_to_homeFragment"
-            app:destination="@id/homeFragment"/>
-        <action
-            android:id="@+id/action_noteFragment_to_addNoteFragment"
-            app:destination="@id/addNoteFragment" />
-        <argument
-            android:name="key"
-            app:argType="string" />
-    </fragment>
-    <fragment
-        android:id="@+id/addNoteFragment"
-        android:name="com.menesdurak.todobuddy.ui.note.AddNoteFragment"
-        android:label="Add Note"
-        tools:layout="@layout/fragment_add_note" >
-        <action
-            android:id="@+id/action_addNoteFragment_to_noteFragment"
-            app:destination="@id/noteFragment" />
-        <argument
-            android:name="key"
-            app:argType="string" />
-    </fragment>
-    <fragment
-        android:id="@+id/addGroupFragment"
-        android:name="com.menesdurak.todobuddy.ui.title.AddGroupFragment"
-        android:label="Add Group"
-        tools:layout="@layout/fragment_add_group" >
-        <action
-            android:id="@+id/action_addGroupFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
-        <argument
-            android:name="email"
-            app:argType="string" />
-    </fragment>
+        android:name="com.menesdurak.todobuddy.presentation.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
 </navigation>
