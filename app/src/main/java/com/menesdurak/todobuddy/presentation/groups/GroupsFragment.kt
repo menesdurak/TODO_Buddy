@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.NavArgs
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.menesdurak.todobuddy.R
 import com.menesdurak.todobuddy.databinding.FragmentGroupsBinding
@@ -35,7 +36,10 @@ class GroupsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Toast.makeText(requireContext(), email, Toast.LENGTH_SHORT).show()
+        binding.button.setOnClickListener {
+            val action = GroupsFragmentDirections.actionGroupsFragmentToAddGroupFragment(email)
+            findNavController().navigate(action)
+        }
     }
 
     override fun onDestroyView() {

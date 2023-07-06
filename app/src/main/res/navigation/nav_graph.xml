@@ -22,5 +22,20 @@
         <argument
             android:name="email"
             app:argType="string" />
+        <action
+            android:id="@+id/action_groupsFragment_to_addGroupFragment"
+            app:destination="@id/addGroupFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addGroupFragment"
+        android:name="com.menesdurak.todobuddy.presentation.groups.AddGroupFragment"
+        android:label="fragment_add_group"
+        tools:layout="@layout/fragment_add_group" >
+        <action
+            android:id="@+id/action_addGroupFragment_to_groupsFragment"
+            app:destination="@id/groupsFragment" />
+        <argument
+            android:name="email"
+            app:argType="string" />
     </fragment>
 </navigation>
