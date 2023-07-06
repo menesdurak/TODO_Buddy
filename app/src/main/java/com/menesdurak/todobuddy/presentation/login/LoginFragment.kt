@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -21,9 +22,6 @@ class LoginFragment : Fragment() {
 
     private lateinit var auth: FirebaseAuth
 
-    private val email = "enes@durak.com"
-    private val password = "sifrem"
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -35,9 +33,9 @@ class LoginFragment : Fragment() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
-        Log.d("12345", auth.currentUser?.email ?: "abc")
         if (currentUser != null) {
             Log.d("12345", "Already signed!")
+            goToGroupsFragment(auth.currentUser!!.email!!)
         }
     }
 
@@ -54,11 +52,23 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        signUpUser(email, password)
+        val etEmail = binding.etEmail.text.toString()
+        val etPassword = binding.etPassword.text.toString()
 
-        signInUser(email, password)
+        binding.btnLogin.setOnClickListener {
+            if (etEmail.isNotBlank() && etPassword.isNotBlank()) {
+                signInUser(etEmail, etPassword)
+                goToGroupsFragment(etEmail)
+            }
+        }
 
-//        signOutUser()
+        binding.btnSignUp.setOnClickListener {
+            if (etEmail.isNotBlank() && etPassword.isNotBlank()) {
+                signUpUser(etEmail, etPassword)
+                goToGroupsFragment(etEmail)
+            }
+        }
+
     }
 
     override fun onDestroyView() {
@@ -71,8 +81,7 @@ class LoginFragment : Fragment() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-                    Log.d("12345", "createUserWithEmail:success")
-                    val user = auth.currentUser
+                    goToGroupsFragment(email)
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w("12345", "createUserWithEmail:failure", task.exception)
@@ -90,8 +99,7 @@ class LoginFragment : Fragment() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-                    Log.d("12345", "signInWithEmail:success")
-                    val user = auth.currentUser
+                    goToGroupsFragment(email)
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w("12345", "signInWithEmail:failure", task.exception)
@@ -107,6 +115,11 @@ class LoginFragment : Fragment() {
     private fun signOutUser() {
         Firebase.auth.signOut()
         Log.d("12345", "sign out complete")
+    }
+
+    private fun goToGroupsFragment(email: String) {
+        val action = LoginFragmentDirections.actionLoginFragmentToGroupsFragment(email)
+        findNavController().navigate(action)
     }
 
 }
