@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
@@ -41,14 +42,15 @@ class AddGroupFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val groupName = binding.etGroupName.text.toString()
-        val buddysEmail = binding.etBuddysEmail.text.toString()
-
         database = Firebase.database.reference
 
         binding.btnAddGroup.setOnClickListener {
+            val groupName = binding.etGroupName.text.toString()
+            val buddysEmail = binding.etBuddysEmail.text.toString()
             if (groupName.isNotBlank() && buddysEmail.isNotBlank()) {
                 addNewGroup(groupName, buddysEmail, database)
+                val action = AddGroupFragmentDirections.actionAddGroupFragmentToGroupsFragment(email)
+                findNavController().navigate(action)
             }
         }
     }
@@ -59,7 +61,7 @@ class AddGroupFragment : Fragment() {
         database: DatabaseReference,
     ) {
         val newGroup = Group(groupName, email, buddysEmail)
-        database.child("groups").setValue("newGroup")
+        database.child("groups").setValue(newGroup)
     }
 
     override fun onDestroyView() {
