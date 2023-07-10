@@ -47,10 +47,17 @@ class AddGroupFragment : Fragment() {
         binding.btnAddGroup.setOnClickListener {
             val groupName = binding.etGroupName.text.toString()
             val buddysEmail = binding.etBuddysEmail.text.toString()
-            if (groupName.isNotBlank() && buddysEmail.isNotBlank()) {
+            //Check edittext fields are empty or not
+            val isEditTextBlank = groupName.isNotBlank() && buddysEmail.isNotBlank()
+            //Check buddy email is valid or not
+            val isEmailValid = android.util.Patterns.EMAIL_ADDRESS.matcher(buddysEmail).matches()
+            if (isEditTextBlank && isEmailValid) {
                 addNewGroup(groupName, buddysEmail, database)
-                val action = AddGroupFragmentDirections.actionAddGroupFragmentToGroupsFragment(email)
+                val action =
+                    AddGroupFragmentDirections.actionAddGroupFragmentToGroupsFragment(email)
                 findNavController().navigate(action)
+            } else {
+                Toast.makeText(requireContext(), "Enter valid values!", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -58,10 +65,11 @@ class AddGroupFragment : Fragment() {
     private fun addNewGroup(
         groupName: String,
         buddysEmail: String,
-        database: DatabaseReference,
+        databaseReference: DatabaseReference,
     ) {
-        val newGroup = Group(groupName, email, buddysEmail)
-        database.child("groups").setValue(newGroup)
+        val listOfEmails = listOf<String>(buddysEmail)
+        val newGroup = Group(groupName, email, listOfEmails)
+        databaseReference.child("groups").push().setValue(newGroup)
     }
 
     override fun onDestroyView() {
