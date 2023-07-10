@@ -4,5 +4,6 @@ data class Group(
     val name: String,
     val userEmail: String,
     val buddysEmails: List<String>,
-    val notes: List<Note> = emptyList()
+    val notes: List<Note> = emptyList(),
+    val groupReference: String
 )

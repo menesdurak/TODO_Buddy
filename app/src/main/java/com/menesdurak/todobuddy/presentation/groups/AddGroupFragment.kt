@@ -68,8 +68,10 @@ class AddGroupFragment : Fragment() {
         databaseReference: DatabaseReference,
     ) {
         val listOfEmails = listOf<String>(buddysEmail)
-        val newGroup = Group(groupName, email, listOfEmails)
-        databaseReference.child("groups").push().setValue(newGroup)
+        val groupKey = databaseReference.child("groups").push()
+        val newGroup = Group(groupName, email, listOfEmails, groupReference = groupKey.key!!)
+        println(groupKey.key)
+        groupKey.setValue(newGroup)
     }
 
     override fun onDestroyView() {
