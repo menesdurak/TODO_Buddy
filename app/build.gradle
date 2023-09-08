@@ -9,12 +9,12 @@ plugins {
 
 android {
     namespace 'com.menesdurak.todobuddy'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.menesdurak.todobuddy"
         minSdk 24
-        targetSdk 33
+        targetSdk 34
         versionCode 5
         versionName "1.1.0"
         resConfigs "en", "tr"
@@ -78,9 +78,4 @@ dependencies {
     //Google Play services library
     implementation("com.google.android.gms:play-services-auth:20.6.0")
 
-//    //Firebase Auth
-//    implementation 'com.google.firebase:firebase-auth-ktx:22.0.0'
-//
-//    //Firebase Realtime Database
-//    implementation 'com.google.firebase:firebase-database-ktx:20.2.2'
 }
