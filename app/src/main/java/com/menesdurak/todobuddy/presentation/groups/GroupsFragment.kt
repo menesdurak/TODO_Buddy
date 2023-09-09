@@ -5,11 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.navigation.NavArgs
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.menesdurak.todobuddy.R
 import com.menesdurak.todobuddy.databinding.FragmentGroupsBinding
 
 class GroupsFragment : Fragment() {
@@ -36,7 +33,7 @@ class GroupsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.button.setOnClickListener {
+        binding.btnAddGroup.setOnClickListener {
             val action = GroupsFragmentDirections.actionGroupsFragmentToAddGroupFragment(email)
             findNavController().navigate(action)
         }

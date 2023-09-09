@@ -52,20 +52,19 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val etEmail = binding.etEmail.text.toString()
-        val etPassword = binding.etPassword.text.toString()
-
         binding.btnLogin.setOnClickListener {
+            val etEmail = binding.etEmail.text.toString()
+            val etPassword = binding.etPassword.text.toString()
             if (etEmail.isNotBlank() && etPassword.isNotBlank()) {
                 signInUser(etEmail, etPassword)
-                goToGroupsFragment(etEmail)
             }
         }
 
         binding.btnSignUp.setOnClickListener {
+            val etEmail = binding.etEmail.text.toString()
+            val etPassword = binding.etPassword.text.toString()
             if (etEmail.isNotBlank() && etPassword.isNotBlank()) {
                 signUpUser(etEmail, etPassword)
-                goToGroupsFragment(etEmail)
             }
         }
 
@@ -90,6 +89,7 @@ class LoginFragment : Fragment() {
                         "Authentication failed.",
                         Toast.LENGTH_SHORT,
                     ).show()
+                    goToGroupsFragment(email)
                 }
             }
     }
@@ -108,13 +108,9 @@ class LoginFragment : Fragment() {
                         "Authentication failed.",
                         Toast.LENGTH_SHORT,
                     ).show()
+                    goToGroupsFragment(email)
                 }
             }
-    }
-
-    private fun signOutUser() {
-        Firebase.auth.signOut()
-        Log.d("12345", "sign out complete")
     }
 
     private fun goToGroupsFragment(email: String) {
