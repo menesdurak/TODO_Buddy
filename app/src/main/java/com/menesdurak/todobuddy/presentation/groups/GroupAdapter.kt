@@ -12,18 +12,18 @@ class GroupAdapter(
     private val onItemClick : (String) -> Unit
 ) : RecyclerView.Adapter<GroupAdapter.GroupHolder>() {
 
-    private val itemList = mutableListOf<GroupUi>()
+    private val itemList = mutableListOf<Group>()
 
     inner class GroupHolder(private val binding: ItemGroupBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-            fun bind(group: GroupUi) {
+            fun bind(group: Group) {
                 binding.apply {
                     this.tvGroupName.text = group.name
                 }
 
                 binding.root.setOnClickListener {
-                    onItemClick.invoke(group.name)
+                    onItemClick.invoke(group.groupReference)
                 }
             }
 
@@ -40,7 +40,7 @@ class GroupAdapter(
         holder.bind(itemList[position])
     }
 
-    fun updateGroupList(newList: List<GroupUi>) {
+    fun updateGroupList(newList: List<Group>) {
         itemList.clear()
         itemList.addAll(newList)
         notifyDataSetChanged()

@@ -18,6 +18,7 @@ import com.google.firebase.ktx.Firebase
 import com.menesdurak.todobuddy.data.local.entity.Group
 import com.menesdurak.todobuddy.data.local.entity.GroupUi
 import com.menesdurak.todobuddy.databinding.FragmentGroupsBinding
+import kotlinx.coroutines.runBlocking
 
 class GroupsFragment : Fragment() {
     private var _binding: FragmentGroupsBinding? = null
@@ -25,7 +26,7 @@ class GroupsFragment : Fragment() {
 
     private var email = ""
 
-    private val groups = mutableListOf<GroupUi>()
+    private val groups = mutableListOf<Group>()
 
     private lateinit var databaseReference: DatabaseReference
 
@@ -34,7 +35,7 @@ class GroupsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentGroupsBinding.inflate(inflater, container, false)
         val view = binding.root
@@ -59,8 +60,11 @@ class GroupsFragment : Fragment() {
         val postListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (postSnapshot in snapshot.children) {
-                    val group = convertDataSnapshotToGroupUi(postSnapshot)
-                    groups.add(group)
+                    val group = convertDataSnapshotToGroup(postSnapshot)
+                    if (email in group.buddysEmails) {
+                        groups.add(group)
+                    }
+
                 }
                 groupAdapter.updateGroupList(groups)
             }
@@ -84,15 +88,24 @@ class GroupsFragment : Fragment() {
     }
 
     private fun onItemClick(groupKey: String) {
-
+        val action = GroupsFragmentDirections.actionGroupsFragmentToNotesFragment(groupKey)
+        findNavController().navigate(action)
     }
 
-    private fun convertDataSnapshotToGroupUi(dataSnapshot: DataSnapshot): GroupUi {
+    private fun convertDataSnapshotToGroup(dataSnapshot: DataSnapshot): Group {
+        lateinit var group: Group
         val name = dataSnapshot.child("name").getValue(String::class.java)
         val groupReference = dataSnapshot.child("groupReference").getValue(String::class.java)
-        return GroupUi(
+        val buddysEmails = mutableListOf<String>()
+        val buddysEmailsReference = dataSnapshot.child("buddysEmails")
+        for (email in buddysEmailsReference.children) {
+            buddysEmails.add(email.value as String)
+        }
+
+        return Group(
             name = name!!,
-            groupReference = groupReference!!
+            groupReference = groupReference!!,
+            buddysEmails = buddysEmails
         )
     }
 
