@@ -1,8 +1,6 @@
 package com.menesdurak.todobuddy.data.local.entity
 
-data class Group(
+data class GroupUi(
     val name: String,
-    val buddysEmails: List<String>,
-    val notes: List<Note> = emptyList(),
     val groupReference: String
 )

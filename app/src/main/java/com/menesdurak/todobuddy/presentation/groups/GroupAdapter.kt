@@ -5,18 +5,19 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.menesdurak.todobuddy.data.local.entity.Group
+import com.menesdurak.todobuddy.data.local.entity.GroupUi
 import com.menesdurak.todobuddy.databinding.ItemGroupBinding
 
 class GroupAdapter(
     private val onItemClick : (String) -> Unit
 ) : RecyclerView.Adapter<GroupAdapter.GroupHolder>() {
 
-    private val itemList = mutableListOf<Group>()
+    private val itemList = mutableListOf<GroupUi>()
 
     inner class GroupHolder(private val binding: ItemGroupBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-            fun bind(group: Group) {
+            fun bind(group: GroupUi) {
                 binding.apply {
                     this.tvGroupName.text = group.name
                 }
@@ -39,7 +40,7 @@ class GroupAdapter(
         holder.bind(itemList[position])
     }
 
-    fun updateGroupList(newList: List<Group>) {
+    fun updateGroupList(newList: List<GroupUi>) {
         itemList.clear()
         itemList.addAll(newList)
         notifyDataSetChanged()

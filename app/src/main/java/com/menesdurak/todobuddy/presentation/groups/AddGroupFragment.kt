@@ -67,9 +67,9 @@ class AddGroupFragment : Fragment() {
         buddysEmail: String,
         databaseReference: DatabaseReference,
     ) {
-        val listOfEmails = listOf<String>(buddysEmail)
+        val listOfEmails = listOf(email, buddysEmail)
         val groupKey = databaseReference.child("groups").push()
-        val newGroup = Group(groupName, email, listOfEmails, groupReference = groupKey.key!!)
+        val newGroup = Group(groupName, listOfEmails, groupReference = groupKey.key!!)
         println(groupKey.key)
         groupKey.setValue(newGroup)
     }

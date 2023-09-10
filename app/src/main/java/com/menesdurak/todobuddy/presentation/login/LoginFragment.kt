@@ -78,7 +78,8 @@ class LoginFragment : Fragment() {
     private fun signUpUser(email: String, password: String) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
+                val isEmailValid = android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+                if (task.isSuccessful && isEmailValid) {
                     // Sign in success, update UI with the signed-in user's information
                     goToGroupsFragment(email)
                 } else {
@@ -97,7 +98,8 @@ class LoginFragment : Fragment() {
     private fun signInUser(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
+                val isEmailValid = android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+                if (task.isSuccessful && isEmailValid) {
                     // Sign in success, update UI with the signed-in user's information
                     goToGroupsFragment(email)
                 } else {
