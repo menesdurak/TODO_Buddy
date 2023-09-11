@@ -2,10 +2,8 @@ package com.menesdurak.todobuddy.presentation.groups
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.menesdurak.todobuddy.data.local.entity.Group
-import com.menesdurak.todobuddy.data.local.entity.GroupUi
 import com.menesdurak.todobuddy.databinding.ItemGroupBinding
 
 class GroupAdapter(

@@ -16,9 +16,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.menesdurak.todobuddy.data.local.entity.Group
-import com.menesdurak.todobuddy.data.local.entity.GroupUi
 import com.menesdurak.todobuddy.databinding.FragmentGroupsBinding
-import kotlinx.coroutines.runBlocking
 
 class GroupsFragment : Fragment() {
     private var _binding: FragmentGroupsBinding? = null
@@ -49,6 +47,8 @@ class GroupsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        groups.clear()
 
         databaseReference = Firebase.database.reference
 
@@ -88,12 +88,11 @@ class GroupsFragment : Fragment() {
     }
 
     private fun onItemClick(groupKey: String) {
-        val action = GroupsFragmentDirections.actionGroupsFragmentToNotesFragment(groupKey)
+        val action = GroupsFragmentDirections.actionGroupsFragmentToNotesFragment(groupKey, email)
         findNavController().navigate(action)
     }
 
     private fun convertDataSnapshotToGroup(dataSnapshot: DataSnapshot): Group {
-        lateinit var group: Group
         val name = dataSnapshot.child("name").getValue(String::class.java)
         val groupReference = dataSnapshot.child("groupReference").getValue(String::class.java)
         val buddysEmails = mutableListOf<String>()

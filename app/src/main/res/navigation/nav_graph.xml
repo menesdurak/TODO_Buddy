@@ -45,5 +45,12 @@
         android:id="@+id/notesFragment"
         android:name="com.menesdurak.todobuddy.presentation.notes.NotesFragment"
         android:label="fragment_notes"
-        tools:layout="@layout/fragment_notes" />
+        tools:layout="@layout/fragment_notes" >
+        <argument
+            android:name="groupKey"
+            app:argType="string" />
+        <argument
+            android:name="email"
+            app:argType="string" />
+    </fragment>
 </navigation>
