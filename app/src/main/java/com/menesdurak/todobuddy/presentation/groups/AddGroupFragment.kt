@@ -15,7 +15,9 @@ import com.menesdurak.todobuddy.R
 import com.menesdurak.todobuddy.data.local.entity.Group
 import com.menesdurak.todobuddy.databinding.FragmentAddGroupBinding
 import com.menesdurak.todobuddy.databinding.FragmentGroupsBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AddGroupFragment : Fragment() {
     private var _binding: FragmentAddGroupBinding? = null
     private val binding get() = _binding!!
@@ -53,9 +55,10 @@ class AddGroupFragment : Fragment() {
             val isEmailValid = android.util.Patterns.EMAIL_ADDRESS.matcher(buddysEmail).matches()
             if (isEditTextBlank && isEmailValid) {
                 addNewGroup(groupName, buddysEmail, database)
-                val action =
-                    AddGroupFragmentDirections.actionAddGroupFragmentToGroupsFragment(email)
-                findNavController().navigate(action)
+//                val action =
+//                    AddGroupFragmentDirections.actionAddGroupFragmentToGroupsFragment(email)
+//                findNavController().navigate(action)
+                findNavController().popBackStack()
             } else {
                 Toast.makeText(requireContext(), "Enter valid values!", Toast.LENGTH_SHORT).show()
             }

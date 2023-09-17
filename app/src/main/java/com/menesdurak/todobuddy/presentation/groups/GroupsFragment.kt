@@ -17,7 +17,9 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.menesdurak.todobuddy.data.local.entity.Group
 import com.menesdurak.todobuddy.databinding.FragmentGroupsBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class GroupsFragment : Fragment() {
     private var _binding: FragmentGroupsBinding? = null
     private val binding get() = _binding!!
@@ -27,6 +29,8 @@ class GroupsFragment : Fragment() {
     private val groups = mutableListOf<Group>()
 
     private lateinit var databaseReference: DatabaseReference
+
+    private lateinit var postListener: ValueEventListener
 
     private val groupAdapter: GroupAdapter by lazy { GroupAdapter(::onItemClick) }
 
@@ -48,8 +52,6 @@ class GroupsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        groups.clear()
-
         databaseReference = Firebase.database.reference
 
         with(binding.recyclerView) {
@@ -57,8 +59,9 @@ class GroupsFragment : Fragment() {
             adapter = groupAdapter
         }
 
-        val postListener = object : ValueEventListener {
+        postListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                groups.clear()
                 for (postSnapshot in snapshot.children) {
                     val group = convertDataSnapshotToGroup(postSnapshot)
                     if (email in group.buddysEmails) {
@@ -88,7 +91,7 @@ class GroupsFragment : Fragment() {
     }
 
     private fun onItemClick(groupKey: String) {
-        val action = GroupsFragmentDirections.actionGroupsFragmentToNotesFragment(groupKey, email)
+        val action = GroupsFragmentDirections.actionGroupsFragmentToNotesFragment(groupKey)
         findNavController().navigate(action)
     }
 
