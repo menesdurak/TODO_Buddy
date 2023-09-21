@@ -48,9 +48,9 @@ class AddNoteFragment : Fragment() {
             val noteText = binding.etNote.text.toString()
 
             if (noteText.isNotBlank()) {
-                val note = Note(note = noteText)
                 val noteKey =
                     databaseReference.push()
+                val note = Note(note = noteText, noteReference = noteKey.key!!)
                 databaseReference.child(noteKey.key!!).setValue(note)
                 findNavController().popBackStack()
             } else {

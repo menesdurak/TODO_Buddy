@@ -1,6 +1,9 @@
 package com.menesdurak.todobuddy.data.local.entity
 
+import java.io.Serializable
+
 data class Note(
-    val note: String,
-    val isDrawn: Boolean = false
-)
+    var note: String,
+    var isDrawn: Boolean = false,
+    var noteReference: String
+) : Serializable

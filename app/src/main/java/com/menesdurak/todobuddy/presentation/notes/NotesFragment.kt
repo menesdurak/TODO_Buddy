@@ -6,7 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -16,31 +20,31 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.menesdurak.todobuddy.data.local.entity.Note
 import com.menesdurak.todobuddy.databinding.FragmentNotesBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NotesFragment : Fragment() {
     private var _binding: FragmentNotesBinding? = null
     private val binding get() = _binding!!
 
-    private var email = ""
     private var groupReference = ""
 
     private val notes = mutableListOf<Note>()
 
     private lateinit var databaseReference: DatabaseReference
 
-    private val noteAdapter: NoteAdapter by lazy { NoteAdapter() }
+    private val noteAdapter: NoteAdapter by lazy { NoteAdapter(::onDoneClicked, ::onDeleteClicked) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentNotesBinding.inflate(inflater, container, false)
         val view = binding.root
 
         //Receiving arguments
         val args: NotesFragmentArgs by navArgs()
-        email = args.email
         groupReference = args.groupKey
 
         return view
@@ -49,11 +53,8 @@ class NotesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        databaseReference = Firebase.database.reference.child("groups").child(groupReference).child("notes")
-
-//        val note = Note("Abcd", true)
-//        val noteKey = databaseReference.child("groups").child(groupReference).child("notes").push()
-//        databaseReference.child("groups").child(groupReference).child("notes").child(noteKey.key!!).setValue(note)
+        databaseReference =
+            Firebase.database.reference.child("groups").child(groupReference).child("notes")
 
         with(binding.recyclerView) {
             layoutManager = LinearLayoutManager(requireContext())
@@ -62,6 +63,7 @@ class NotesFragment : Fragment() {
 
         val postListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                notes.clear()
                 for (postSnapshot in snapshot.children) {
                     val note = convertDataSnapshotToNote(postSnapshot)
                     notes.add(note)
@@ -75,22 +77,38 @@ class NotesFragment : Fragment() {
             }
         }
 
-        databaseReference.get().addOnSuccessListener {
-            for (note in it.children) {
-                println(note.value)
-                databaseReference.child(note.key!!).addValueEventListener(postListener)
-            }
+        databaseReference.addValueEventListener(postListener)
+
+        binding.btnAddNote.setOnClickListener {
+            val action =
+                NotesFragmentDirections.actionNotesFragmentToAddNoteFragment(groupReference)
+            findNavController().navigate(action)
         }
     }
 
     private fun convertDataSnapshotToNote(dataSnapshot: DataSnapshot): Note {
         val isDrawn = dataSnapshot.child("drawn").getValue(Boolean::class.java)
         val note = dataSnapshot.child("note").getValue(String::class.java)
+        val noteReference = dataSnapshot.child("noteReference").getValue(String::class.java)
 
         return Note(
             note = note!!,
-            isDrawn = isDrawn!!
+            isDrawn = isDrawn!!,
+            noteReference = noteReference!!
         )
+    }
+
+    private fun onDoneClicked(position: Int) {
+//        noteAdapter.updateDrawnStatus(position)
+//        val childUpdate = hashMapOf<String, Any>(
+//            "/drawn" to (noteAdapter.getNoteDrawnStatus(position))
+//        )
+//        databaseReference.child(noteAdapter.getNoteReference(position)).updateChildren(childUpdate)
+    }
+
+    private fun onDeleteClicked(position: Int) {
+        noteAdapter.removeNote(position)
+        databaseReference.child(noteAdapter.getNoteReference(position)).removeValue()
     }
 
     override fun onDestroyView() {
