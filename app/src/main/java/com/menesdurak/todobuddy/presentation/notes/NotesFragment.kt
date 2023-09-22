@@ -98,17 +98,15 @@ class NotesFragment : Fragment() {
         )
     }
 
-    private fun onDoneClicked(position: Int) {
-//        noteAdapter.updateDrawnStatus(position)
-//        val childUpdate = hashMapOf<String, Any>(
-//            "/drawn" to (noteAdapter.getNoteDrawnStatus(position))
-//        )
-//        databaseReference.child(noteAdapter.getNoteReference(position)).updateChildren(childUpdate)
+    private fun onDoneClicked(position: Int, noteReference: String, isDrawn: Boolean) {
+        noteAdapter.updateDrawnStatus(position)
+        val childUpdate = hashMapOf<String, Any>("/drawn" to !isDrawn)
+        databaseReference.child(noteReference).updateChildren(childUpdate)
     }
 
-    private fun onDeleteClicked(position: Int) {
+    private fun onDeleteClicked(position: Int, noteReference: String) {
         noteAdapter.removeNote(position)
-        databaseReference.child(noteAdapter.getNoteReference(position)).removeValue()
+        databaseReference.child(noteReference).removeValue()
     }
 
     override fun onDestroyView() {
