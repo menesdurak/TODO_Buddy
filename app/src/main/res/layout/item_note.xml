@@ -11,10 +11,11 @@
         android:id="@+id/tvNote"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
-        tools:text="Note"
+        android:layout_weight="1"
+        android:fontFamily="@font/buenard"
         android:gravity="center"
-        android:layout_weight="1"/>
+        android:textSize="24sp"
+        tools:text="Note" />
 
     <ImageButton
         android:id="@+id/ivDone"

@@ -1,61 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.groups.AddGroupFragment">
 
     <TextView
         android:id="@+id/tvGroupName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
         android:layout_marginTop="100dp"
+        android:fontFamily="@font/buenard"
         android:text="Group Name"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/etGroupName"
-        app:layout_constraintTop_toBottomOf="@id/tvGroupName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
+        android:fontFamily="@font/buenard"
         android:hint="Enter your group name"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/tvGroupName" />
 
     <TextView
         android:id="@+id/tvBuddysEmail"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etGroupName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="20dp"
+        android:fontFamily="@font/buenard"
         android:text="Buddy's Email"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etGroupName" />
 
     <EditText
         android:id="@+id/etBuddysEmail"
-        app:layout_constraintTop_toBottomOf="@id/tvBuddysEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
+        android:fontFamily="@font/buenard"
         android:hint="Enter your buddy's email"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/tvBuddysEmail" />
 
     <Button
         android:id="@+id/btnAddGroup"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etBuddysEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="Add Group" />
+        android:fontFamily="@font/buenard"
+        android:text="Add Group"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etBuddysEmail" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
