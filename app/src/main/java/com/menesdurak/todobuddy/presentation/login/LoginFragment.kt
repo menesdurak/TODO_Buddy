@@ -8,10 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.menesdurak.todobuddy.databinding.FragmentLoginBinding
+import com.menesdurak.todobuddy.presentation.groups.GroupsFragmentArgs
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,6 +21,8 @@ class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
+
+    private var email = ""
 
     private lateinit var auth: FirebaseAuth
 
@@ -46,23 +50,32 @@ class LoginFragment : Fragment() {
     ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         val view = binding.root
+
+        //Receiving arguments
+        val args: LoginFragmentArgs by navArgs()
+        email = args.email
+
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if (email.isBlank().not()) {
+            binding.tinetMail.setText(email)
+        }
+
         binding.btnLogin.setOnClickListener {
-            val etEmail = binding.etEmail.text.toString()
-            val etPassword = binding.etPassword.text.toString()
+            val etEmail = binding.tinetMail.text.toString()
+            val etPassword = binding.tinetPassword.text.toString()
             if (etEmail.isNotBlank() && etPassword.isNotBlank()) {
                 signInUser(etEmail, etPassword)
             }
         }
 
         binding.btnSignUp.setOnClickListener {
-            val etEmail = binding.etEmail.text.toString()
-            val etPassword = binding.etPassword.text.toString()
+            val etEmail = binding.tinetMail.text.toString()
+            val etPassword = binding.tinetPassword.text.toString()
             if (etEmail.isNotBlank() && etPassword.isNotBlank()) {
                 signUpUser(etEmail, etPassword)
             }

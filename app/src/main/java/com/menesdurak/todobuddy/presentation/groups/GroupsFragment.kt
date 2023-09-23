@@ -9,6 +9,9 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -28,11 +31,20 @@ class GroupsFragment : Fragment() {
 
     private val groups = mutableListOf<Group>()
 
+    private lateinit var auth: FirebaseAuth
+
     private lateinit var databaseReference: DatabaseReference
 
     private lateinit var postListener: ValueEventListener
 
     private val groupAdapter: GroupAdapter by lazy { GroupAdapter(::onItemClick) }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // Initialize Firebase Auth
+        auth = Firebase.auth
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -82,6 +94,15 @@ class GroupsFragment : Fragment() {
             for (group in it.children) {
                 databaseReference.child(group.key!!).addValueEventListener(postListener)
             }
+        }
+
+        binding.ivLogOut.setOnClickListener {
+            Snackbar.make(it, "Do you want to sign out?", Snackbar.LENGTH_SHORT)
+                .setAction("Yes") {
+                    auth.signOut()
+                    val action = GroupsFragmentDirections.actionGroupsFragmentToLoginFragment(email)
+                    findNavController().navigate(action)
+                }.show()
         }
 
         binding.btnAddGroup.setOnClickListener {
