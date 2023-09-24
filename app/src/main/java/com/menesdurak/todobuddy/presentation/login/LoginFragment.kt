@@ -100,10 +100,9 @@ class LoginFragment : Fragment() {
                     Log.w("12345", "createUserWithEmail:failure", task.exception)
                     Toast.makeText(
                         requireContext(),
-                        "Authentication failed.",
+                        "Sign up failed.",
                         Toast.LENGTH_SHORT,
                     ).show()
-                    goToGroupsFragment(email)
                 }
             }
     }
